@@ -112,7 +112,7 @@ public class Player1 : MonoBehaviour
 
     void playerStopJumpAnim()
     {
-
+        // 
         if(noChao && rigidbody2D.velocity.y <0.1f)
         {
             animator.SetFloat("Jump", 0f);
@@ -145,8 +145,18 @@ public class Player1 : MonoBehaviour
 
     public bool isGrounded()
     {
-        float TestLength = 0.1f;
-        Vector2 Start =  new Vector2(boxCollider2D.bounds.min.x + TestLength, boxCollider2D.bounds.min.y - TestLength);
+        float TestLength = 0.1f, ajusteFlipRay;
+
+        if(olhandoDireita)
+        {
+            ajusteFlipRay = 0.3f;
+        }
+        else
+        {
+            ajusteFlipRay = 0f;
+        }
+
+        Vector2 Start =  new Vector2(boxCollider2D.bounds.min.x + TestLength + ajusteFlipRay, boxCollider2D.bounds.min.y - TestLength);
         Vector2 Direction = new Vector2((boxCollider2D.bounds.extents.x), 0);
 
         //if ()

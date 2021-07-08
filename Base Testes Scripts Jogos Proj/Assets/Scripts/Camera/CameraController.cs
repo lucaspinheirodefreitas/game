@@ -9,15 +9,25 @@ public class CameraController : MonoBehaviour
     public Transform Jogador;
     public Vector3 offset;
 
+    public float smoothSpeed = 0.125f;
+
+    private float yCamera, yDesired, ySmoothed;
+
+
     void Start()
     {
-        
+        yCamera = Jogador.position.y;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // Camera follows the player with specified offset position
-        transform.position = new Vector3(Jogador.position.x + offset.x, Jogador.position.y + offset.y, offset.z);
+        // Camera follows smoothly the player with specified offset position and smoothSpeed
+        yDesired = Jogador.position.y; 
+
+        yCamera = Mathf.Lerp(yCamera, yDesired,smoothSpeed);
+            
+        transform.position = new Vector3(Jogador.position.x + offset.x, yCamera + offset.y, offset.z);
     }
+
 }
