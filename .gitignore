@@ -1,0 +1,7 @@
+game/.vscode
+game/Library
+game/Logs
+game/Packages
+game/UserSettings
+game/game.sln
+game/Assembly-CSharp.csproj
