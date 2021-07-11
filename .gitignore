@@ -1,8 +1,9 @@
-game/.vscode
-game/Library
-game/Logs
-game/Packages
-game/UserSettings
-game/game.sln
-game/Assembly-CSharp.csproj
-game/obj/Debug
+/.vscode
+/Library
+/Logs
+/Packages
+/UserSettings
+game.sln
+Assembly-CSharp.csproj
+/obj/Debug
+/Temp
