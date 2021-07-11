@@ -5,4 +5,4 @@ game/Packages
 game/UserSettings
 game/game.sln
 game/Assembly-CSharp.csproj
-obj/Debug
+game/obj/Debug
