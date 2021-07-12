@@ -438,6 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 415612725}
   attackRange: 0.5
+  attackDamage: 20
   animator: {fileID: 0}
   enemyLayers:
     serializedVersion: 2
@@ -1756,17 +1757,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inimigo1
       objectReference: {fileID: 0}
+    - target: {fileID: 4173828803676968361, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: m_Size.x
+      value: 0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173828803676968361, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: m_Size.y
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173828803676968361, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173828803676968361, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173828803676968361, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.34
+      objectReference: {fileID: 0}
     - target: {fileID: 4173828803676968365, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4173828803676968365, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.6
+      value: 21.8
       objectReference: {fileID: 0}
     - target: {fileID: 4173828803676968365, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.62
+      value: -0.65
       objectReference: {fileID: 0}
     - target: {fileID: 4173828803676968365, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1800,5 +1821,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4173828803676968367, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6474817916930609645, guid: 2fe3e5257962e564d9fdc5751c610085, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52fa76251b0a7864b97b397e63866457, type: 3}

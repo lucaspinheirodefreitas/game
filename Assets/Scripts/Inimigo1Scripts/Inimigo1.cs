@@ -39,6 +39,6 @@ public class Inimigo1 : MonoBehaviour
     {
         Debug.Log("Enemy "+ this.name + " died!");
 
-
+        animator.SetBool("Dead", true);
     }
 }
