@@ -7,6 +7,7 @@ public class Player1Combat : MonoBehaviour
     // Start is called before the first frame update
     public Transform attackPoint;
     public float attackRange=0.5f;
+    public int attackDamage = 20;
     public Animator animator;
     public LayerMask enemyLayers;
     void Start()
@@ -37,6 +38,9 @@ public class Player1Combat : MonoBehaviour
         foreach(Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit "+ enemy.name);
+            Debug.Log("Tipo do inimigo = " + enemy.GetType());
+            System.Type i = enemy.GetType();
+            enemy.GetComponent<Inimigo1>().TakeDamage(attackDamage);
         }
     }
 
