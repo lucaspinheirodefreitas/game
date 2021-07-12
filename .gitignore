@@ -1,0 +1,9 @@
+/.vscode
+/Library
+/Logs
+/Packages
+/UserSettings
+game.sln
+Assembly-CSharp.csproj
+/obj/Debug
+/Temp
