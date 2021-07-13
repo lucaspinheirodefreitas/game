@@ -10,6 +10,7 @@ public class Player1 : MonoBehaviour
     private float horizontalMove;
     private float verticalMove;
     private bool noChao;
+    
 
     private bool Pulou;
 
@@ -31,7 +32,6 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
-        //animator.SetBool("CaindoEsquerda", false);
         noChao = isGrounded();
         Pulou = false;
 
@@ -54,7 +54,7 @@ public class Player1 : MonoBehaviour
             playerStopJumpAnim();
             Pulou = false;
         }
-
+            
     }
 
     // Update is called once per frame
@@ -86,13 +86,6 @@ public class Player1 : MonoBehaviour
 
         properFlip();
 
-        //transform.rotation = new Quaternion(0.0f,0.0f,0.0f, 0.0f);
-        
-        //Debug.Log("Velocidade Horizontal = " + rigidbody2D.velocity.x);
-        //Debug.Log("Velocidade Vertical = " + rigidbody2D.velocity.y);
-
-        //Debug.Log("Horizontal = " + horizontal);
-        //Debug.Log("Vertical = " + vertical);
 
     }
 
@@ -168,7 +161,7 @@ public class Player1 : MonoBehaviour
 
         if(hit2DSingle.collider != null)
         {
-            Debug.Log(hit2DSingle.collider);
+            //Debug.Log(hit2DSingle.collider);
             SingleRayColor = Color.green;
         }
         else
@@ -176,9 +169,9 @@ public class Player1 : MonoBehaviour
             SingleRayColor = Color.red;
         }
         
-        Debug.Log("Tamanho do riao do isGrounded = " + hit2DSingle.centroid.magnitude);
+        //Debug.Log("Tamanho do riao do isGrounded = " + hit2DSingle.centroid.magnitude);
 
-        Debug.DrawRay(Start,Direction,SingleRayColor);
+        //Debug.DrawRay(Start,Direction,SingleRayColor);
 
         return hit2DSingle.collider != null;
 
@@ -188,12 +181,12 @@ public class Player1 : MonoBehaviour
     {
         if((Input.GetAxis("Horizontal") < 0 && olhandoDireita) || (Input.GetAxis("Horizontal") > 0 && !olhandoDireita))
         {
-            Debug.Log("Vai flipar");
-            Debug.Log("Rotaçao inicial = " + transform.rotation);
-            Debug.Log("Flipou!");
+            //Debug.Log("Vai flipar");
+            //Debug.Log("Rotaçao inicial = " + transform.rotation);
+            //Debug.Log("Flipou!");
             olhandoDireita = !olhandoDireita;
             transform.Rotate(new Vector3(0, 180, 0));
-            Debug.Log("Rotaçao final = " + transform.rotation);
+            //Debug.Log("Rotaçao final = " + transform.rotation);
 
         }
     }
