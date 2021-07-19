@@ -338,7 +338,7 @@ Transform:
   m_Children:
   - {fileID: 415612725}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &528621114
 MonoBehaviour:
@@ -1744,7 +1744,7 @@ Transform:
   m_Children:
   - {fileID: 1624813821}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4173828802128277461
 PrefabInstance:
@@ -1829,5 +1829,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6474817916930609645, guid: 2fe3e5257962e564d9fdc5751c610085, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 52fa76251b0a7864b97b397e63866457, type: 3}

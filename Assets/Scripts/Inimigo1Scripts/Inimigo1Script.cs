@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inimigo1 : MonoBehaviour
+public class Inimigo1Script : MonoBehaviour
 {
-    // Start is called before the first frame update
+ // Start is called before the first frame update
     public int maxHealth;
     private int currentHealth;
     private Animator animator;
@@ -13,8 +13,8 @@ public class Inimigo1 : MonoBehaviour
     public bool olhandoDireita;
     private bool Pulou;
     public float Speed;
-    private float horizontalMove;
-    private float verticalMove;
+    public float horizontalMove;
+    public float verticalMove;
 
     [SerializeField]
     private LayerMask groundLayer;
@@ -48,8 +48,13 @@ public class Inimigo1 : MonoBehaviour
     {
         if (horizontalMove != 0)
             Move();
+        else
+            animator.SetFloat("Speed", 0f);
+            
         if(verticalMove != 0)
             Jump();
+        
+
         properFlip();
     }
 
@@ -156,10 +161,10 @@ public class Inimigo1 : MonoBehaviour
             animator.SetFloat("Speed", 0f);
         }
 
+        Debug.Log("speed do inimigo animator = " + horizontalMove);
         properFlip();
 
     }
-
 
 
 }
