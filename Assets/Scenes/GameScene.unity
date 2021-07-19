@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 8
+  maxHealth: 100
   olhandoDireita: 1
   animator: {fileID: 0}
   groundLayer:
@@ -1829,6 +1830,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6474817916930609645, guid: 2fe3e5257962e564d9fdc5751c610085, type: 3}
+    - target: {fileID: 6764804071669174254, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 52fa76251b0a7864b97b397e63866457, type: 3}

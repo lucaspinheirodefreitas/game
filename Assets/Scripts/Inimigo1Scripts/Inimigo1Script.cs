@@ -15,6 +15,14 @@ public class Inimigo1Script : MonoBehaviour
     public float Speed;
     public float horizontalMove;
     public float verticalMove;
+    public Transform attackPoint;
+    public LayerMask enemyLayers;
+    public float attackRange=0.5f;
+    public int attackDamage = 20;
+
+    public bool tomandoDano = false;
+
+    public bool attack=false;
 
     [SerializeField]
     private LayerMask groundLayer;
@@ -36,6 +44,9 @@ public class Inimigo1Script : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         Pulou = false;
         rigidbody2D = GetComponent<Rigidbody2D>();
+        attack = false;
+        Debug.Log("Inimigo1 attack = " + attack);
+        
     }
 
     // Update is called once per frame
@@ -46,6 +57,7 @@ public class Inimigo1Script : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Debug.Log("Inimigo1 attack = " + attack);
         if (horizontalMove != 0)
             Move();
         else
@@ -54,12 +66,20 @@ public class Inimigo1Script : MonoBehaviour
         if(verticalMove != 0)
             Jump();
         
+        if(attack)
+        {
+            //Debug.Log("Inimigo1 atacando!");
+            enemyAttackAnim();
+            //attack = !attack;
+        }
+            
 
         properFlip();
     }
 
     public void TakeDamage(int damage)
     {
+        tomandoDano = true;
         currentHealth -= damage;
 
         // animacao de machucar
@@ -72,6 +92,11 @@ public class Inimigo1Script : MonoBehaviour
             Die();
         }
 
+    }
+
+    public void ResetTakeDamage()
+    {
+        tomandoDano = false;
     }
 
     void Die()
@@ -167,6 +192,42 @@ public class Inimigo1Script : MonoBehaviour
         properFlip();
 
     }
+    void enemyAttackAnim()
+    {
+
+        animator.SetTrigger("AttackTrigger");
+        //enemyAttackCollDetection();
+        //attack = ! attack;
+                                 
+    }
+
+    void enemyAttackCollDetection()
+    {
+        Debug.Log("Iniciando Detecçao de collider de ataque do inimigo1");
+        Collider2D[] hitEnemies =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D player = hitEnemies[0];
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            if(enemy.name == "Player")
+                player = enemy;
+
+            Debug.Log("We hit "+ enemy.name);
+            Debug.Log("Tipo do inimigo = " + enemy.GetType());
+            System.Type i = enemy.GetType();
+            
+        }
+
+        player.GetComponent<Player1>().TakeDamage(attackDamage);
+    }
+
+    void OnDrawGizmosSelected()
+    {  
+        if(!attackPoint)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
 
 
 }
