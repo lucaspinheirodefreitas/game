@@ -98,7 +98,7 @@ public class Player1 : MonoBehaviour
         {
 
             //transform.position = transform.position + vertical * (Mathf.Clamp((Time.deltaTime * Speed), 0, Speed));
-            rigidbody2D.velocity = Vector2.up * Speed;
+            rigidbody2D.velocity = Vector2.up * (Speed*5);
             //Debug.Log("Pulou!");
             animator.SetFloat("Jump", Speed);
         }

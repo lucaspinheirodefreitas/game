@@ -35,7 +35,7 @@ public class EnemyGeneralBot : MonoBehaviour
         if(inimigo1Script.animator.GetBool("Dead"))
         {
             enemy.layer = LayerMask.NameToLayer("ChaoTiles");;
-            //Object.Destroy(inimigo1Script);
+            Object.Destroy(inimigo1Script);
             Object.Destroy(this);
         }
 
