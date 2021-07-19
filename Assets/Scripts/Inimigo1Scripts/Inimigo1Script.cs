@@ -72,6 +72,9 @@ public class Inimigo1Script : MonoBehaviour
             enemyAttackAnim();
             //attack = !attack;
         }
+
+        if(tomandoDano && animator.GetBool("Dead") == false)
+            animator.SetTrigger("Inimigo1Damage");
             
 
         properFlip();
