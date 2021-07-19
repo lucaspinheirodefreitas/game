@@ -24,7 +24,13 @@ public class EnemyGeneralBot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(inimigo1Script.animator.GetBool("Dead"))
+        {
+            enemy.layer = LayerMask.NameToLayer("ChaoTiles");;
+            Object.Destroy(inimigo1Script);
+            Object.Destroy(this);
+        }
+
         olhandoDireita = inimigo1Script.olhandoDireita;
         
     }
@@ -35,15 +41,15 @@ public class EnemyGeneralBot : MonoBehaviour
 
         if(detectPlayer != 0)
         {
-            Debug.Log("Player detectado!");
+            //Debug.Log("Player detectado!");
             inimigo1Script.horizontalMove = 1*ajusteDirecao*detectPlayer;
             //Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
         }
         else
         {
-            Debug.Log("Player nao detectado");
+            //Debug.Log("Player nao detectado");
             inimigo1Script.horizontalMove = 0;
-            Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
+            //Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
         }
 
     }

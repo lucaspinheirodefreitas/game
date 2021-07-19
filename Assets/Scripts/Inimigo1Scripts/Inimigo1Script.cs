@@ -7,7 +7,7 @@ public class Inimigo1Script : MonoBehaviour
  // Start is called before the first frame update
     public int maxHealth;
     private int currentHealth;
-    private Animator animator;
+    public Animator animator;
 
     private bool noChao;
     public bool olhandoDireita;
@@ -50,7 +50,7 @@ public class Inimigo1Script : MonoBehaviour
             Move();
         else
             animator.SetFloat("Speed", 0f);
-            
+
         if(verticalMove != 0)
             Jump();
         
@@ -63,6 +63,7 @@ public class Inimigo1Script : MonoBehaviour
         currentHealth -= damage;
 
         // animacao de machucar
+        Debug.Log("Vida atual = " + currentHealth);
 
         animator.SetTrigger("Inimigo1Damage");
 
@@ -78,6 +79,7 @@ public class Inimigo1Script : MonoBehaviour
         Debug.Log("Enemy "+ this.name + " died!");
 
         animator.SetBool("Dead", true);
+
     }
 
     void Jump()
@@ -161,7 +163,7 @@ public class Inimigo1Script : MonoBehaviour
             animator.SetFloat("Speed", 0f);
         }
 
-        Debug.Log("speed do inimigo animator = " + horizontalMove);
+        //Debug.Log("speed do inimigo animator = " + horizontalMove);
         properFlip();
 
     }

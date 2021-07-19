@@ -40,7 +40,7 @@ public class Player1Combat : MonoBehaviour
             Debug.Log("We hit "+ enemy.name);
             Debug.Log("Tipo do inimigo = " + enemy.GetType());
             System.Type i = enemy.GetType();
-            enemy.GetComponent<Inimigo1>().TakeDamage(attackDamage);
+            enemy.GetComponent<Inimigo1Script>().TakeDamage(attackDamage);
         }
     }
 
