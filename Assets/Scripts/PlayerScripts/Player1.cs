@@ -4,6 +4,8 @@ public class Player1 : MonoBehaviour
 {
     // Start is called before the first frame update
     public float Speed;
+    public int maxHealth=100;
+    private int currentHealth;
     public bool olhandoDireita;
     public Animator animator;
 
@@ -34,7 +36,7 @@ public class Player1 : MonoBehaviour
         rigidbody2D = GetComponent<Rigidbody2D>();
         noChao = isGrounded();
         Pulou = false;
-
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -96,7 +98,7 @@ public class Player1 : MonoBehaviour
         {
 
             //transform.position = transform.position + vertical * (Mathf.Clamp((Time.deltaTime * Speed), 0, Speed));
-            rigidbody2D.velocity = Vector2.up * Speed;
+            rigidbody2D.velocity = Vector2.up * (Speed*5);
             //Debug.Log("Pulou!");
             animator.SetFloat("Jump", Speed);
         }
@@ -189,6 +191,30 @@ public class Player1 : MonoBehaviour
             //Debug.Log("Rotaçao final = " + transform.rotation);
 
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        // animacao de machucar
+        Debug.Log("Vida atual = " + currentHealth);
+
+        animator.SetTrigger("Player1Damage");
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+
+    }
+
+    void Die()
+    {
+        Debug.Log("Enemy "+ this.name + " died!");
+
+        animator.SetBool("Dead", true);
+
     }
 
 }

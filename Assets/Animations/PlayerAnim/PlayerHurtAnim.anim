@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Inimigo1HurtAnim
+  m_Name: PlayerHurtAnim
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,11 +20,11 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -2564383168423420662, guid: 9437d0a462f88f148ab6a7cb7d1af497, type: 3}
-    - time: 0.25
-      value: {fileID: -7400074292645236167, guid: 9437d0a462f88f148ab6a7cb7d1af497, type: 3}
-    - time: 0.5
-      value: {fileID: -2564383168423420662, guid: 9437d0a462f88f148ab6a7cb7d1af497, type: 3}
+      value: {fileID: 1372562320747842243, guid: f53ba2fa0198f844ba0fb04f2642d6c0, type: 3}
+    - time: 0.16666667
+      value: {fileID: -3255611989448627187, guid: f53ba2fa0198f844ba0fb04f2642d6c0, type: 3}
+    - time: 0.33333334
+      value: {fileID: 1372562320747842243, guid: f53ba2fa0198f844ba0fb04f2642d6c0, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,15 +44,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -2564383168423420662, guid: 9437d0a462f88f148ab6a7cb7d1af497, type: 3}
-    - {fileID: -7400074292645236167, guid: 9437d0a462f88f148ab6a7cb7d1af497, type: 3}
-    - {fileID: -2564383168423420662, guid: 9437d0a462f88f148ab6a7cb7d1af497, type: 3}
+    - {fileID: 1372562320747842243, guid: f53ba2fa0198f844ba0fb04f2642d6c0, type: 3}
+    - {fileID: -3255611989448627187, guid: f53ba2fa0198f844ba0fb04f2642d6c0, type: 3}
+    - {fileID: 1372562320747842243, guid: f53ba2fa0198f844ba0fb04f2642d6c0, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.51666665
+    m_StopTime: 0.35000002
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -71,11 +71,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.5
-    functionName: ResetTakeDamage
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

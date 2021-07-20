@@ -13,11 +13,19 @@ public class EnemyGeneralBot : MonoBehaviour
     private bool olhandoDireita;
     Inimigo1Script inimigo1Script;
 
+    public Transform attackPoint;
+    public LayerMask enemyLayers;
+    public float attackRange=0.5f;
+
     private float ajusteDirecao=1;
     void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
         inimigo1Script = enemy.GetComponent<Inimigo1Script>();
+
+        attackPoint = inimigo1Script.attackPoint;
+        enemyLayers = inimigo1Script.enemyLayers;
+        attackRange = inimigo1Script.attackRange;
         
     }
 
@@ -39,19 +47,54 @@ public class EnemyGeneralBot : MonoBehaviour
     {
         int detectPlayer = DetectPlayer();
 
-        if(detectPlayer != 0)
+        bool tomandoDano = inimigo1Script.tomandoDano;
+
+        if(detectPlayer != 0 && tomandoDano == false)
         {
-            //Debug.Log("Player detectado!");
-            inimigo1Script.horizontalMove = 1*ajusteDirecao*detectPlayer;
-            //Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
+
+            if(DetectAttackRange())
+            {
+                inimigo1Script.attack = true;
+                inimigo1Script.horizontalMove = 0;
+                inimigo1Script.verticalMove = 0;
+
+            }
+            else
+            {
+                inimigo1Script.attack = false;
+                //Debug.Log("Player detectado!");
+                inimigo1Script.horizontalMove = 1*ajusteDirecao*detectPlayer;
+                //Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
+
+            }
+
         }
         else
         {
+            inimigo1Script.attack = false;
             //Debug.Log("Player nao detectado");
             inimigo1Script.horizontalMove = 0;
             //Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
         }
 
+    }
+
+    bool DetectAttackRange()
+    {
+
+        Collider2D[] hitEnemies =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            if (enemy != null)
+            {
+                //Debug.Log(enemy.name);
+                return true;
+            }
+                
+        }
+
+        return false;
     }
 
     int DetectPlayer()
