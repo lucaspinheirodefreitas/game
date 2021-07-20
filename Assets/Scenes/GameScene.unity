@@ -519,8 +519,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 0
-  dirt: {fileID: 6457483105367114435, guid: ba99c0537464b0d4b8bd251739a4a4a1, type: 3}
-  grass: {fileID: 6149585234045590830, guid: 2748108394267764ea4052a5a379fd54, type: 3}
+  dirt: {fileID: 6248742612290766094, guid: 9170fcc9e9d0e5f4196cc3b37e8eafa7, type: 3}
+  grass: {fileID: 2705923293273943562, guid: 486a9452a8c6dd0429f91c406fce966e, type: 3}
 --- !u!4 &1463054095
 Transform:
   m_ObjectHideFlags: 0
