@@ -19,11 +19,8 @@ public class MapGenerator : MonoBehaviour
             height = Random.Range(minHeight, maxHeight);
 
 
-            for (int y = 0; y < height; y++)//This will help spawn a tile on the y axis
-            {
-                //spawnObj(dirt, x, y);
- 
-            }
+            
+            spawnObj(dirt, x, height - 1);
             spawnObj(grass, x, height);
         }
     }
