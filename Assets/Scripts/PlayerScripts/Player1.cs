@@ -50,6 +50,11 @@ public class Player1 : MonoBehaviour
         {
             Pulou = true;
             playerJump();
+            
+        }
+        else if(rigidbody2D.velocity.y < 0)
+        {
+            animator.SetBool("Falling", true);
         }
         else
         {
@@ -101,6 +106,7 @@ public class Player1 : MonoBehaviour
             rigidbody2D.velocity = Vector2.up * (Speed*1.2f);
             //Debug.Log("Pulou!");
             animator.SetFloat("Jump", Speed);
+            
         }
 
     }
@@ -111,6 +117,7 @@ public class Player1 : MonoBehaviour
         if(noChao && rigidbody2D.velocity.y <0.1f)
         {
             animator.SetFloat("Jump", 0f);
+            animator.SetBool("Falling", false);
         }
     }
 

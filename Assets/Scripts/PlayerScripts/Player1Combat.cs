@@ -20,6 +20,7 @@ public class Player1Combat : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Z))
         {
+            
             playerAttackAnim();
         }
     }
@@ -28,8 +29,14 @@ public class Player1Combat : MonoBehaviour
     void playerAttackAnim()
     {
 
+        animator.SetBool("Attack", true);
         animator.SetTrigger("AttackTrigger");
                                  
+    }
+
+    void playerStopAttackAnim()
+    {
+        animator.SetBool("Attack", false);
     }
 
     void playerAttackCollDetection()
