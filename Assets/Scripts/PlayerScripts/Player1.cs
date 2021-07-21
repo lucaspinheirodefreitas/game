@@ -12,6 +12,8 @@ public class Player1 : MonoBehaviour
     private float horizontalMove;
     private float verticalMove;
     private bool noChao;
+
+    private bool dead=false;
     
 
     private bool Pulou;
@@ -41,32 +43,35 @@ public class Player1 : MonoBehaviour
 
     void Update()
     {
+        if (!dead)
+        {
+            horizontalMove = Input.GetAxisRaw("Horizontal");
+            verticalMove   = Input.GetAxisRaw("Vertical");
+            noChao = isGrounded();
 
-        horizontalMove = Input.GetAxisRaw("Horizontal");
-        verticalMove   = Input.GetAxisRaw("Vertical");
-        noChao = isGrounded();
+            if((Input.GetKeyDown(KeyCode.UpArrow)|| Input.GetKeyDown(KeyCode.Space)))
+            {
+                Pulou = true;
+                playerJump();
 
-        if((Input.GetKeyDown(KeyCode.UpArrow)|| Input.GetKeyDown(KeyCode.Space)))
-        {
-            Pulou = true;
-            playerJump();
-            
-        }
-        else if(rigidbody2D.velocity.y < 0)
-        {
-            animator.SetBool("Falling", true);
-        }
-        else
-        {
-            playerStopJumpAnim();
-            Pulou = false;
-        }
-            
+            }
+            else if(rigidbody2D.velocity.y < 0)
+            {
+                animator.SetBool("Falling", true);
+            }
+            else
+            {
+                playerStopJumpAnim();
+                Pulou = false;
+            }
+        }    
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(dead)
+            return;
 
         Vector3 horizontal = new Vector3(horizontalMove, 0.0f, 0.0f);
 
@@ -180,7 +185,7 @@ public class Player1 : MonoBehaviour
         
         //Debug.Log("Tamanho do riao do isGrounded = " + hit2DSingle.centroid.magnitude);
 
-        //Debug.DrawRay(Start,Direction,SingleRayColor);
+        Debug.DrawRay(Start,Direction,SingleRayColor);
 
         return hit2DSingle.collider != null;
 
@@ -218,9 +223,22 @@ public class Player1 : MonoBehaviour
 
     void Die()
     {
+        dead = true;
         Debug.Log("Enemy "+ this.name + " died!");
 
+        
         animator.SetBool("Dead", true);
+
+        Destroy(this);
+    }
+
+    public void destroyPlayer()
+    {
+        // Avisar de alguma maneira o gamemanager que o jogo acabou!
+        DestroyImmediate(animator);
+
+        Destroy(this);
+
 
     }
 
