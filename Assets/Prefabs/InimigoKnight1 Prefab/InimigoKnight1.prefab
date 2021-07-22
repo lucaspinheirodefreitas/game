@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5155531574953791607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8467257537418139136}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8467257537418139136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155531574953791607}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.529, y: -0.153, z: 46.071236}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7900993205553192354}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7900993205553192355
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,6 +44,7 @@ GameObject:
   - component: {fileID: 7900993205553192359}
   - component: {fileID: 4623984618336237015}
   - component: {fileID: 127743699134484348}
+  - component: {fileID: 6019180887277176776}
   m_Layer: 0
   m_Name: InimigoKnight1
   m_TagString: Untagged
@@ -31,7 +62,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 46.2, y: 7.6, z: 19.235888}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8467257537418139136}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -99,9 +131,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.0951982, y: 0.47791946}
+  m_Offset: {x: 0.1458168, y: 0.49469185}
   m_SpriteTilingProperty:
-    border: {x: 4.706667, y: 2.1000001, z: 2.5066667, w: 1.1466666}
+    border: {x: 4.706667, y: 2.1000001, z: 2.4933333, w: 1.1466666}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 12, y: 6.6666665}
     newSize: {x: 15, y: 8.333333}
@@ -110,7 +142,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.7564735, y: 3.458174}
+  m_Size: {x: 1.9664536, y: 3.3811579}
   m_EdgeRadius: 0
 --- !u!50 &7900993205553192359
 Rigidbody2D:
@@ -124,10 +156,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 200
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -140,7 +172,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7900993205553192355}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 859d8d4dd34d79a4695a0dcfacf442a8, type: 3}
   m_Name: 
@@ -148,20 +180,20 @@ MonoBehaviour:
   maxHealth: 0
   animator: {fileID: 0}
   olhandoDireita: 0
-  Speed: 0
+  Speed: 5
   horizontalMove: 0
   verticalMove: 0
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 8467257537418139136}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
-  attackRange: 0.5
-  attackDamage: 20
+    m_Bits: 64
+  attackRange: 1.5
+  attackDamage: 300
   tomandoDano: 0
   attack: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!114 &127743699134484348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,18 +201,37 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7900993205553192355}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ecc5e2da61aecd40a62839629b27a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  enemy: {fileID: 7900993205553192355}
   visionRange: 10
   player:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   attackPoint: {fileID: 0}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
-  attackRange: 0.5
+    m_Bits: 64
+  attackRange: 1
+--- !u!95 &6019180887277176776
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7900993205553192355}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c2459a9a9b31c484db12ddcd2a95a62b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

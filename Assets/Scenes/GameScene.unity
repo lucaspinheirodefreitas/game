@@ -814,6 +814,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1820947727}
     m_Modifications:
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: attackRange
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623984618336237015, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: attackRange
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623984618336237015, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: attackDamage
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623984618336237015, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: olhandoDireita
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7900993205553192354, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -861,6 +877,14 @@ PrefabInstance:
     - target: {fileID: 7900993205553192355, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: m_Name
       value: InimigoKnight1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467257537418139136, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467257537418139136, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
