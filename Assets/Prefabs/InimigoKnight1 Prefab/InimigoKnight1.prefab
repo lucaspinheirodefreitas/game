@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8467257537418139136}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4623984618336237015}
   - component: {fileID: 127743699134484348}
   - component: {fileID: 6019180887277176776}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InimigoKnight1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859d8d4dd34d79a4695a0dcfacf442a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 500
   animator: {fileID: 0}
   olhandoDireita: 0
   Speed: 5
