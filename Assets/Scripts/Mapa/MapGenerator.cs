@@ -3,7 +3,7 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] int width, height;
-    [SerializeField] GameObject dirt, grass;
+    [SerializeField] GameObject dirt, grass, inimigo1, inimigoKnight;
     void Start()
     {
         Generation();
@@ -11,6 +11,7 @@ public class MapGenerator : MonoBehaviour
 
     void Generation()
     {
+        int y = 0;
         for (int x = 0; x < width; x++)//This will help spawn a tile on the x axis
         {
             // now for procedural generation we need to gradually increase and decrease the height value
@@ -20,14 +21,32 @@ public class MapGenerator : MonoBehaviour
 
 
             
-            spawnObj(dirt, x, height - 1);
-            spawnObj(grass, x, height);
+            spawnObj(dirt, x + y, height - 1);
+            spawnObj(grass, x + y, height);
+            y += 2;
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            int x = Random.Range(0, width);
+            inimigo1 = Instantiate(inimigo1, new Vector2(x, height + 2), Quaternion.identity);
+        }
+
+
+        for (int i = 0; i < 2; i++)
+        {
+            int x = Random.Range(0, width);
+            inimigo1 = Instantiate(inimigo1, new Vector2(x, height + 2), Quaternion.identity);
         }
     }
 
     void spawnObj(GameObject obj, int width, int height)//What ever we spawn will be a child of our procedural generation gameObj
     {
+
         obj = Instantiate(obj, new Vector2(width, height), Quaternion.identity);
         obj.transform.parent = this.transform;
+
     }
+
+   
 }
