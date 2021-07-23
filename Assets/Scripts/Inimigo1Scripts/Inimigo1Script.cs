@@ -9,9 +9,9 @@ public class Inimigo1Script : MonoBehaviour
     private int currentHealth;
     public Animator animator;
 
-    private bool noChao;
+    public bool noChao;
     public bool olhandoDireita;
-    private bool Pulou;
+    public bool Pulou;
     public float Speed;
     public float horizontalMove;
     public float verticalMove;
@@ -68,7 +68,7 @@ public class Inimigo1Script : MonoBehaviour
         
         if(attack)
         {
-            //Debug.Log("Inimigo1 atacando!");
+            Debug.Log("Inimigo1 atacando!");
             enemyAttackAnim();
             //attack = !attack;
         }
@@ -110,7 +110,7 @@ public class Inimigo1Script : MonoBehaviour
 
     }
 
-    void Jump()
+    public void Jump()
     {
         if (noChao && Pulou)
         {
@@ -195,33 +195,31 @@ public class Inimigo1Script : MonoBehaviour
         properFlip();
 
     }
-    void enemyAttackAnim()
-    {
-
-        animator.SetTrigger("AttackTrigger");
-        //enemyAttackCollDetection();
-        //attack = ! attack;
-                                 
+    void enemyAttackAnim() {
+        animator.SetTrigger("AttackTrigger");                    
     }
 
     void enemyAttackCollDetection()
     {
         Debug.Log("Iniciando Detecçao de collider de ataque do inimigo1");
         Collider2D[] hitEnemies =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        Collider2D player = hitEnemies[0];
+        
+        if(hitEnemies.Length > 0) { // correção de bug - indexOfBound quando o player saia da frente do inimigo no meio do ataque
+            Collider2D player = hitEnemies[0];
 
-        foreach(Collider2D enemy in hitEnemies)
-        {
-            if(enemy.name == "Player")
-                player = enemy;
+            foreach(Collider2D enemy in hitEnemies)
+            {
+                if(enemy.name == "Player")
+                    player = enemy;
 
-            Debug.Log("We hit "+ enemy.name);
-            Debug.Log("Tipo do inimigo = " + enemy.GetType());
-            System.Type i = enemy.GetType();
-            
+                Debug.Log("We hit "+ enemy.name);
+                Debug.Log("Tipo do inimigo = " + enemy.GetType());
+                System.Type i = enemy.GetType();
+                
+            }
+
+            player.GetComponent<Player1>().TakeDamage(attackDamage);
         }
-
-        player.GetComponent<Player1>().TakeDamage(attackDamage);
     }
 
     void OnDrawGizmosSelected()

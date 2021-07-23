@@ -17,7 +17,34 @@ public class EnemyGeneralBot : MonoBehaviour
     public LayerMask enemyLayers;
     public float attackRange=0.5f;
 
-    private float ajusteDirecao=1;
+
+    /* IA */
+    RaycastHit2D soloFrente;
+    RaycastHit2D soloTras;
+    RaycastHit2D soloEsq;
+    RaycastHit2D soloDir;
+    RaycastHit2D soloEsqDuplo;
+    RaycastHit2D soloDirDuplo;
+    RaycastHit2D obstaculoDireita;
+    RaycastHit2D obstaculoEsquerda;
+    public LayerMask solo;
+    public bool temSolo;
+    public bool temSoloEsq;
+    public bool temSoloDir;
+    public bool temObstaculoFrente;
+    public bool temObstaculoTras;
+    public Vector3[] posicao;
+    public float distanciaSolo;
+    public float distanciaSoloCentro;
+    float tempoDeEspera;
+    bool direita;
+    bool esquerda;
+    int direcaoAnterior;
+    int direcao;
+    bool start;
+    float tempoProcessamento;
+
+    private int ajusteDirecao=1;
     void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -26,7 +53,8 @@ public class EnemyGeneralBot : MonoBehaviour
         attackPoint = inimigo1Script.attackPoint;
         enemyLayers = inimigo1Script.enemyLayers;
         attackRange = inimigo1Script.attackRange;
-        
+        direcao = 0;
+        start = true;
     }
 
     // Update is called once per frame
@@ -43,39 +71,48 @@ public class EnemyGeneralBot : MonoBehaviour
         
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         int detectPlayer = DetectPlayer();
-
         bool tomandoDano = inimigo1Script.tomandoDano;
+        inimigo1Script.noChao = false;
 
-        if(detectPlayer != 0 && tomandoDano == false)
-        {
 
-            if(DetectAttackRange())
-            {
-                inimigo1Script.attack = true;
-                inimigo1Script.horizontalMove = 0;
-                inimigo1Script.verticalMove = 0;
+        if(detectPlayer != 0) {
+            if(!tomandoDano /*&& player1.currentHealth > 0*/) {
 
+                if(DetectAttackRange()) {  
+
+                    inimigo1Script.attack = true;
+                    direcao = 0;
+                    start = true;
+                    inimigo1Script.horizontalMove = direcao;
+                    inimigo1Script.verticalMove = direcao;
+                }
+                else {
+                    inimigo1Script.attack = false;
+                    direcao = ajusteDirecao*detectPlayer; 
+                    if(verificacaoObstaculo(direcao)) {
+                        pularObstaculo();
+                    }
+                }
             }
-            else
-            {
-                inimigo1Script.attack = false;
-                //Debug.Log("Player detectado!");
-                inimigo1Script.horizontalMove = 1*ajusteDirecao*detectPlayer;
-                //Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
-
-            }
-
-        }
-        else
-        {
+        } else {
+            if (verificarEstaSolo() && start) {
+                direcao = Random.Range(0, 2);
+                direcao = direcao > 0 ? 1 : -1;
+                start = false;
+            } else if(verificacaoSolo(direcao)) {
+                if(verificacaoObstaculo(direcao)) {
+                    pularObstaculo();
+                }
+            } else {
+                direcao *= -1;
+            } 
             inimigo1Script.attack = false;
-            //Debug.Log("Player nao detectado");
-            inimigo1Script.horizontalMove = 0;
-            //Debug.Log("Horizontal move = " + inimigo1Script.horizontalMove);
-        }
+            inimigo1Script.horizontalMove = direcao;
+        }  
+
+        //tempoProcessamento = Mathf.Clamp(tempoProcessamento - Time.fixedDeltaTime, 0, Mathf.Infinity);
 
     }
 
@@ -88,7 +125,6 @@ public class EnemyGeneralBot : MonoBehaviour
         {
             if (enemy != null)
             {
-                //Debug.Log(enemy.name);
                 return true;
             }
                 
@@ -143,5 +179,64 @@ public class EnemyGeneralBot : MonoBehaviour
         
 
         return 0;
+    }
+
+    private bool verificacaoSolo(int direcao) {
+        temSoloEsq = temSoloDir = false;
+        soloEsq = Raycast(new Vector2(posicao[0].x, posicao[0].y), Vector2.down, distanciaSolo, solo);
+        soloDir = Raycast(new Vector2(posicao[1].x, posicao[1].y), Vector2.down, distanciaSolo, solo);
+        soloEsqDuplo = Raycast(new Vector2(posicao[2].x, posicao[2].y), Vector2.down, distanciaSolo, solo);
+        soloDirDuplo = Raycast(new Vector2(posicao[3].x, posicao[3].y), Vector2.down, distanciaSolo, solo);
+        
+        if (soloEsq || soloEsqDuplo) {
+            temSoloEsq = true;
+        } 
+        if (soloDir || soloDirDuplo) { 
+            temSoloDir = true;
+        }
+
+        return (temSoloDir && direcao>0) || (temSoloEsq && direcao<0);
+    }
+
+    private bool verificarEstaSolo() {
+        temSolo = false; // TODO remover variavel
+        soloFrente = Raycast(new Vector2(posicao[4].x, posicao[4].y), Vector2.down, distanciaSoloCentro, solo);
+        soloTras = Raycast(new Vector2(posicao[5].x, posicao[5].y), Vector2.down, distanciaSoloCentro, solo);
+
+        if (soloFrente || soloTras) {
+            temSolo = true;
+        }
+        return soloFrente || soloTras;
+    }
+
+    private bool verificacaoObstaculo(int direcao) {
+        temObstaculoFrente = temObstaculoTras = false;
+        obstaculoDireita = Raycast(new Vector2(posicao[6].x, posicao[6].y), Vector2.right, 0.6f, solo);
+        obstaculoEsquerda = Raycast(new Vector2(posicao[7].x, posicao[7].y), Vector2.left, 0.6f, solo);
+
+        if (obstaculoDireita) { 
+            temObstaculoFrente = true;
+        }
+        if (obstaculoEsquerda) {
+            temObstaculoTras = true;
+        }
+        return temObstaculoFrente && direcao>0 || temObstaculoTras && direcao<0;
+    }
+
+    private void pularObstaculo() {
+        inimigo1Script.verticalMove = 1;
+        inimigo1Script.Pulou = true;
+        inimigo1Script.noChao = true;
+        inimigo1Script.Jump();
+        inimigo1Script.noChao = false;
+    }
+    private RaycastHit2D Raycast(Vector3 origem, Vector2 direcaoRaio, float distanciaSolo, LayerMask mask) {
+        Vector3 posicaoAtual = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(posicaoAtual + origem, direcaoRaio, distanciaSolo, mask);
+        Color corRaio = hit ? Color.green : Color.red;
+
+        Debug.DrawRay(posicaoAtual + origem, direcaoRaio*distanciaSolo, corRaio);
+
+        return hit;
     }
 }
