@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 7
-  maxHealth: 1000
+  maxHealth: 100
   olhandoDireita: 1
   animator: {fileID: 0}
   groundLayer:
