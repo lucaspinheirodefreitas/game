@@ -5,17 +5,13 @@ public class Player1 : MonoBehaviour
     // Start is called before the first frame update
     public float Speed;
     public int maxHealth=100;
-    private int currentHealth;
+    public int currentHealth;
     public bool olhandoDireita;
     public Animator animator;
-
     private float horizontalMove;
     private float verticalMove;
     private bool noChao;
-
-    private bool dead=false;
-    
-
+    private bool dead;
     private bool Pulou;
 
     [SerializeField]
@@ -39,6 +35,7 @@ public class Player1 : MonoBehaviour
         noChao = isGrounded();
         Pulou = false;
         currentHealth = maxHealth;
+        dead = false;
     }
 
     void Update()
@@ -67,7 +64,6 @@ public class Player1 : MonoBehaviour
         }    
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if(dead)
@@ -106,10 +102,7 @@ public class Player1 : MonoBehaviour
 
         if (noChao && Pulou)
         {
-
-            //transform.position = transform.position + vertical * (Mathf.Clamp((Time.deltaTime * Speed), 0, Speed));
             rigidbody2D.velocity = Vector2.up * (Speed*1.2f);
-            //Debug.Log("Pulou!");
             animator.SetFloat("Jump", Speed);
             
         }
@@ -118,7 +111,6 @@ public class Player1 : MonoBehaviour
 
     void playerStopJumpAnim()
     {
-        // 
         if(noChao && rigidbody2D.velocity.y <0.1f)
         {
             animator.SetFloat("Jump", 0f);
@@ -166,8 +158,6 @@ public class Player1 : MonoBehaviour
         Vector2 Start =  new Vector2(boxCollider2D.bounds.min.x + TestLength + ajusteFlipRay, boxCollider2D.bounds.min.y - TestLength);
         Vector2 Direction = new Vector2((boxCollider2D.bounds.extents.x), 0);
 
-        //if ()
-
         RaycastHit2D hit2DSingle = Physics2D.Raycast(Start, Direction, Direction.magnitude, groundLayer);
         Color SingleRayColor;
 
@@ -175,16 +165,12 @@ public class Player1 : MonoBehaviour
 
         if(hit2DSingle.collider != null)
         {
-            //Debug.Log(hit2DSingle.collider);
             SingleRayColor = Color.green;
         }
         else
         {
             SingleRayColor = Color.red;
         }
-        
-        //Debug.Log("Tamanho do riao do isGrounded = " + hit2DSingle.centroid.magnitude);
-
         Debug.DrawRay(Start,Direction,SingleRayColor);
 
         return hit2DSingle.collider != null;
@@ -195,13 +181,8 @@ public class Player1 : MonoBehaviour
     {
         if((Input.GetAxis("Horizontal") < 0 && olhandoDireita) || (Input.GetAxis("Horizontal") > 0 && !olhandoDireita))
         {
-            //Debug.Log("Vai flipar");
-            //Debug.Log("Rotaçao inicial = " + transform.rotation);
-            //Debug.Log("Flipou!");
             olhandoDireita = !olhandoDireita;
             transform.Rotate(new Vector3(0, 180, 0));
-            //Debug.Log("Rotaçao final = " + transform.rotation);
-
         }
     }
 
@@ -221,6 +202,9 @@ public class Player1 : MonoBehaviour
 
     }
 
+    public bool isDie() {
+        return dead;
+    }
     void Die()
     {
         dead = true;

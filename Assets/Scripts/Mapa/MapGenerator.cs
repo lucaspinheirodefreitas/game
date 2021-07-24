@@ -26,22 +26,21 @@ public class MapGenerator : MonoBehaviour
             y += 2;
         }
 
-        for (int i = 0; i < 4; i++)
-        {
-            int x = Random.Range(0, width);
-            inimigo1 = Instantiate(inimigo1, new Vector2(x, height + 2), Quaternion.identity);
-        }
+        //for (int i = 0; i < 4; i++)
+        //{
+            //int xz = Random.Range(0, width);
+            //inimigo1 = Instantiate(inimigo1, new Vector2(xz, height + 2), Quaternion.identity);
+        //}
 
 
-        for (int i = 0; i < 2; i++)
-        {
-            int x = Random.Range(0, width);
-            inimigo1 = Instantiate(inimigo1, new Vector2(x, height + 2), Quaternion.identity);
-        }
+        //for (int i = 0; i < 2; i++)
+        //{
+            //int xy = Random.Range(0, width);
+            //inimigo1 = Instantiate(inimigo1, new Vector2(xy, height + 2), Quaternion.identity);
+        //}
     }
 
-    void spawnObj(GameObject obj, int width, int height)//What ever we spawn will be a child of our procedural generation gameObj
-    {
+    void spawnObj(GameObject obj, int width, int height) {
 
         obj = Instantiate(obj, new Vector2(width, height), Quaternion.identity);
         obj.transform.parent = this.transform;

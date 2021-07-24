@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Inimigo1Script : MonoBehaviour
 {
- // Start is called before the first frame update
     public int maxHealth;
     private int currentHealth;
     public Animator animator;
-
     public bool noChao;
     public bool olhandoDireita;
     public bool Pulou;
@@ -19,20 +17,15 @@ public class Inimigo1Script : MonoBehaviour
     public LayerMask enemyLayers;
     public float attackRange=0.5f;
     public int attackDamage = 20;
-
-    public bool tomandoDano = false;
-
-    public bool attack=false;
-
+    public bool tomandoDano;
+    public bool attack;
     [SerializeField]
     private LayerMask groundLayer;
     private Rigidbody2D rigidbody2D;
     private BoxCollider2D boxCollider2D;
-
-    public LayerMask GroundLayer 
-    { 
-        get
-        {
+    float tempoProcessamento;
+    public LayerMask GroundLayer  { 
+        get {
             return groundLayer;
         }
     }
@@ -45,89 +38,53 @@ public class Inimigo1Script : MonoBehaviour
         Pulou = false;
         rigidbody2D = GetComponent<Rigidbody2D>();
         attack = false;
-        Debug.Log("Inimigo1 attack = " + attack);
-        
+        tomandoDano = false;
+        tempoProcessamento = 0.5f;  
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void FixedUpdate()
-    {
-        //Debug.Log("Inimigo1 attack = " + attack);
-        if (horizontalMove != 0)
-            Move();
-        else
-            animator.SetFloat("Speed", 0f);
-
-        if(verticalMove != 0)
-            Jump();
-        
-        if(attack)
-        {
-            Debug.Log("Inimigo1 atacando!");
-            enemyAttackAnim();
-            //attack = !attack;
-        }
-
-        if(tomandoDano && animator.GetBool("Dead") == false)
+    void FixedUpdate() {
+        // TODO revisar necessidade
+        if(tomandoDano && animator.GetBool("Dead") == false) {
+            Debug.Log("Inimigo morreu");
             animator.SetTrigger("Inimigo1Damage");
-            
-
-        properFlip();
+        }
+        
+        //properFlip();
     }
 
-    public void TakeDamage(int damage)
-    {
+    public void TakeDamage(int damage) {
         tomandoDano = true;
         currentHealth -= damage;
 
-        // animacao de machucar
         Debug.Log("Vida atual = " + currentHealth);
 
         animator.SetTrigger("Inimigo1Damage");
 
         if(currentHealth <= 0)
-        {
             Die();
-        }
 
     }
 
-    public void ResetTakeDamage()
-    {
+    public void ResetTakeDamage() {
         tomandoDano = false;
     }
 
-    void Die()
-    {
+    void Die() {
         Debug.Log("Enemy "+ this.name + " died!");
-
         animator.SetBool("Dead", true);
-
     }
 
-    public void Jump()
-    {
-        if (noChao && Pulou)
-        {
-            //transform.position = transform.position + vertical * (Mathf.Clamp((Time.del
+    public void Jump() {
+        if (noChao && Pulou) {
             rigidbody2D.velocity = Vector2.up * Speed;
-            //Debug.Log("Pulou!");
             animator.SetFloat("Jump", Speed);
         }
+        animator.SetFloat("Jump", 0.0f);
     }
 
-    void playerStopJumpAnim()
-    {
-        // 
+    void playerStopJumpAnim() {
         if(noChao && rigidbody2D.velocity.y <0.1f)
-        {
             animator.SetFloat("Jump", 0f);
-        }
     }
 
     public bool isGrounded()
@@ -135,13 +92,9 @@ public class Inimigo1Script : MonoBehaviour
         float TestLength = 0.1f, ajusteFlipRay;
 
         if(olhandoDireita)
-        {
             ajusteFlipRay = 0.3f;
-        }
         else
-        {
             ajusteFlipRay = 0f;
-        }
 
         Vector2 Start =  new Vector2(boxCollider2D.bounds.min.x + TestLength + ajusteFlipRay, boxCollider2D.bounds.min.y - TestLength);
         Vector2 Direction = new Vector2((boxCollider2D.bounds.extents.x), 0);
@@ -172,30 +125,28 @@ public class Inimigo1Script : MonoBehaviour
             transform.Rotate(new Vector3(0, 180, 0));
         }
     }
+    
+    public void properFlip(int direcao) {
+        if((direcao < 0 && olhandoDireita) || (direcao > 0 && !olhandoDireita)) {
+            olhandoDireita = !olhandoDireita;
+            transform.Rotate(new Vector3(0, 180, 0));
+        }
+    }
 
-    void Move()
+    public void Move(float direcao)
     {
-
-        Vector3 horizontal = new Vector3(horizontalMove, 0.0f, 0.0f);
-
+        Vector3 horizontal = new Vector3(direcao, 0.0f, 0.0f);
         transform.position = transform.position + (((horizontal * Time.deltaTime * Speed)));
-
-        Vector3 vertical = new Vector3(0.0f, verticalMove, 0.0f);
-
-        if (horizontalMove > 0.1f || horizontalMove < -0.1f)  // direita
-        {
+        if (direcao > 0 || direcao < 0)  // direita
             animator.SetFloat("Speed",  Speed);
-        }
         else
-        {
-            animator.SetFloat("Speed", 0f);
-        }
-
-        //Debug.Log("speed do inimigo animator = " + horizontalMove);
-        properFlip();
+           animator.SetFloat("Speed", 0.0f);
+        
+        properFlip((int)direcao);
 
     }
-    void enemyAttackAnim() {
+    
+    public void enemyAttackAnim() {
         animator.SetTrigger("AttackTrigger");                    
     }
 
@@ -204,7 +155,7 @@ public class Inimigo1Script : MonoBehaviour
         Debug.Log("Iniciando Detecçao de collider de ataque do inimigo1");
         Collider2D[] hitEnemies =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         
-        if(hitEnemies.Length > 0) { // correção de bug - indexOfBound quando o player saia da frente do inimigo no meio do ataque
+        if(hitEnemies.Length > 0) { 
             Collider2D player = hitEnemies[0];
 
             foreach(Collider2D enemy in hitEnemies)
@@ -217,8 +168,7 @@ public class Inimigo1Script : MonoBehaviour
                 System.Type i = enemy.GetType();
                 
             }
-
-            player.GetComponent<Player1>().TakeDamage(attackDamage);
+            player.GetComponent<Player1>().TakeDamage(attackDamage); // TODO - ajustar BUG
         }
     }
 

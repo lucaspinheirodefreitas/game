@@ -8,9 +8,9 @@ public class EnemyGeneralBot : MonoBehaviour
 
     private BoxCollider2D boxCollider2D;
     public GameObject enemy;
+    public GameObject playerOponente;
     public float visionRange=10f;
     public LayerMask player;
-    private bool olhandoDireita;
     Inimigo1Script inimigo1Script;
 
     public Transform attackPoint;
@@ -19,6 +19,7 @@ public class EnemyGeneralBot : MonoBehaviour
 
 
     /* IA */
+    Player1 oponente;
     RaycastHit2D soloFrente;
     RaycastHit2D soloTras;
     RaycastHit2D soloEsq;
@@ -27,69 +28,52 @@ public class EnemyGeneralBot : MonoBehaviour
     RaycastHit2D soloDirDuplo;
     RaycastHit2D obstaculoDireita;
     RaycastHit2D obstaculoEsquerda;
+    RaycastHit2D atacanteDireita;
+    RaycastHit2D atacanteEsquerda;
     public LayerMask solo;
-    public bool temSolo;
-    public bool temSoloEsq;
-    public bool temSoloDir;
-    public bool temObstaculoFrente;
-    public bool temObstaculoTras;
+    public LayerMask atacante;
     public Vector3[] posicao;
     public float distanciaSolo;
     public float distanciaSoloCentro;
     float tempoDeEspera;
-    bool direita;
-    bool esquerda;
-    int direcaoAnterior;
     int direcao;
     bool start;
+    private int ajusteDirecao;
     float tempoProcessamento;
-
-    private int ajusteDirecao=1;
+    public float distanciaObstaculo;
+    public float distanciaAtacante;
     void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
         inimigo1Script = enemy.GetComponent<Inimigo1Script>();
+        oponente = playerOponente.GetComponent<Player1>();
 
         attackPoint = inimigo1Script.attackPoint;
         enemyLayers = inimigo1Script.enemyLayers;
         attackRange = inimigo1Script.attackRange;
         direcao = 0;
         start = true;
+        ajusteDirecao = 1;
+        tempoProcessamento = 0.5f;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(inimigo1Script.animator.GetBool("Dead"))
-        {
+    void FixedUpdate() {
+        if(inimigo1Script.animator.GetBool("Dead")) {
             enemy.layer = LayerMask.NameToLayer("ChaoTiles");;
             Object.Destroy(inimigo1Script);
             Object.Destroy(this);
         }
 
-        olhandoDireita = inimigo1Script.olhandoDireita;
-        
-    }
-
-    void FixedUpdate() {
         int detectPlayer = DetectPlayer();
-        bool tomandoDano = inimigo1Script.tomandoDano;
-        inimigo1Script.noChao = false;
-
-
+    
         if(detectPlayer != 0) {
-            if(!tomandoDano /*&& player1.currentHealth > 0*/) {
-
+            if(tempoProcessamento==0 && !oponente.isDie()) {
                 if(DetectAttackRange()) {  
-
-                    inimigo1Script.attack = true;
                     direcao = 0;
+                    inimigo1Script.enemyAttackAnim();
+                    tempoProcessamento=0.5f;
                     start = true;
-                    inimigo1Script.horizontalMove = direcao;
-                    inimigo1Script.verticalMove = direcao;
                 }
                 else {
-                    inimigo1Script.attack = false;
                     direcao = ajusteDirecao*detectPlayer; 
                     if(verificacaoObstaculo(direcao)) {
                         pularObstaculo();
@@ -101,6 +85,8 @@ public class EnemyGeneralBot : MonoBehaviour
                 direcao = Random.Range(0, 2);
                 direcao = direcao > 0 ? 1 : -1;
                 start = false;
+            } else if (verificacaoAtacante(direcao)){
+                direcao *= -1;
             } else if(verificacaoSolo(direcao)) {
                 if(verificacaoObstaculo(direcao)) {
                     pularObstaculo();
@@ -108,12 +94,10 @@ public class EnemyGeneralBot : MonoBehaviour
             } else {
                 direcao *= -1;
             } 
-            inimigo1Script.attack = false;
-            inimigo1Script.horizontalMove = direcao;
-        }  
-
-        //tempoProcessamento = Mathf.Clamp(tempoProcessamento - Time.fixedDeltaTime, 0, Mathf.Infinity);
-
+        }
+        inimigo1Script.Move((float) direcao);
+        inimigo1Script.properFlip(direcao);
+        tempoProcessamento = Mathf.Clamp(tempoProcessamento - Time.fixedDeltaTime, 0, Mathf.Infinity);
     }
 
     bool DetectAttackRange()
@@ -121,15 +105,10 @@ public class EnemyGeneralBot : MonoBehaviour
 
         Collider2D[] hitEnemies =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
-        foreach(Collider2D enemy in hitEnemies)
-        {
+        foreach(Collider2D enemy in hitEnemies)  {
             if (enemy != null)
-            {
-                return true;
-            }
-                
+                return true;    
         }
-
         return false;
     }
 
@@ -137,14 +116,10 @@ public class EnemyGeneralBot : MonoBehaviour
     {
         float TestLength = 0.1f, ajusteFlipRay=0;
 
-        if(olhandoDireita)
-        {
+        if(inimigo1Script.olhandoDireita) 
             ajusteDirecao = 1;
-        }
-        else
-        {
+        else 
             ajusteDirecao = -1;
-        }
 
         Vector2 Start =  new Vector2(boxCollider2D.bounds.min.x + boxCollider2D.bounds.extents.x + TestLength + ajusteFlipRay, boxCollider2D.bounds.min.y + boxCollider2D.bounds.extents.y - TestLength);
         Vector2 Direction = new Vector2((boxCollider2D.bounds.extents.x)*visionRange*ajusteDirecao, 0);
@@ -157,79 +132,63 @@ public class EnemyGeneralBot : MonoBehaviour
         SingleRayColor = Color.magenta;
 
         if(hit2DSingleFront.collider != null || hit2DSingleBack.collider != null)
-        {
             SingleRayColor = Color.green;
-        }
         else
-        {
             SingleRayColor = Color.red;
-        }
 
         Debug.DrawRay(Start,Direction,SingleRayColor);
         Debug.DrawRay(Start,Direction*-1,SingleRayColor);
 
         if (hit2DSingleFront.collider != null)
-        {
             return 1;
-        }
         else if(hit2DSingleBack.collider != null)
-        {
             return -1;
-        }
-        
-
         return 0;
     }
 
+    // verifica se tem solo ou se está proximo a um abismo
     private bool verificacaoSolo(int direcao) {
-        temSoloEsq = temSoloDir = false;
         soloEsq = Raycast(new Vector2(posicao[0].x, posicao[0].y), Vector2.down, distanciaSolo, solo);
         soloDir = Raycast(new Vector2(posicao[1].x, posicao[1].y), Vector2.down, distanciaSolo, solo);
         soloEsqDuplo = Raycast(new Vector2(posicao[2].x, posicao[2].y), Vector2.down, distanciaSolo, solo);
         soloDirDuplo = Raycast(new Vector2(posicao[3].x, posicao[3].y), Vector2.down, distanciaSolo, solo);
-        
-        if (soloEsq || soloEsqDuplo) {
-            temSoloEsq = true;
-        } 
-        if (soloDir || soloDirDuplo) { 
-            temSoloDir = true;
-        }
 
-        return (temSoloDir && direcao>0) || (temSoloEsq && direcao<0);
+        return ((soloDir || soloDirDuplo) && direcao>0) || ((soloEsq || soloEsqDuplo) && direcao<0);
     }
 
+    // verifica se está proximo a tocar o solo
     private bool verificarEstaSolo() {
-        temSolo = false; // TODO remover variavel
         soloFrente = Raycast(new Vector2(posicao[4].x, posicao[4].y), Vector2.down, distanciaSoloCentro, solo);
         soloTras = Raycast(new Vector2(posicao[5].x, posicao[5].y), Vector2.down, distanciaSoloCentro, solo);
 
-        if (soloFrente || soloTras) {
-            temSolo = true;
-        }
         return soloFrente || soloTras;
     }
 
+    // verifica se tem algum obstaculo proximo 
     private bool verificacaoObstaculo(int direcao) {
-        temObstaculoFrente = temObstaculoTras = false;
-        obstaculoDireita = Raycast(new Vector2(posicao[6].x, posicao[6].y), Vector2.right, 0.6f, solo);
-        obstaculoEsquerda = Raycast(new Vector2(posicao[7].x, posicao[7].y), Vector2.left, 0.6f, solo);
+        obstaculoDireita = Raycast(new Vector2(posicao[6].x, posicao[6].y), Vector2.right, distanciaObstaculo, solo);
+        obstaculoEsquerda = Raycast(new Vector2(posicao[7].x, posicao[7].y), Vector2.left, distanciaObstaculo, solo);
 
-        if (obstaculoDireita) { 
-            temObstaculoFrente = true;
-        }
-        if (obstaculoEsquerda) {
-            temObstaculoTras = true;
-        }
-        return temObstaculoFrente && direcao>0 || temObstaculoTras && direcao<0;
+        return obstaculoDireita && direcao>0 || obstaculoEsquerda && direcao<0;
     }
 
+    // verifica se tem algum outro atacante ao player proximo
+    private bool verificacaoAtacante(int direcao) {
+        atacanteDireita = Raycast(new Vector2(posicao[8].x, posicao[8].y), Vector2.right, distanciaAtacante, atacante);
+        atacanteEsquerda = Raycast(new Vector2(posicao[9].x, posicao[9].y), Vector2.left, distanciaAtacante, atacante);
+
+        return atacanteDireita && direcao>0 || atacanteEsquerda && direcao<0;
+    }
+
+    // pula obstaculo
     private void pularObstaculo() {
-        inimigo1Script.verticalMove = 1;
         inimigo1Script.Pulou = true;
         inimigo1Script.noChao = true;
         inimigo1Script.Jump();
         inimigo1Script.noChao = false;
     }
+
+    // se detectar objeto com a mascara informada e com a distantia informada retorna raio verde, caso contrario retorna raio vermelho.
     private RaycastHit2D Raycast(Vector3 origem, Vector2 direcaoRaio, float distanciaSolo, LayerMask mask) {
         Vector3 posicaoAtual = transform.position;
         RaycastHit2D hit = Physics2D.Raycast(posicaoAtual + origem, direcaoRaio, distanciaSolo, mask);
