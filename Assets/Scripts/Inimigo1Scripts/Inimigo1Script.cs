@@ -72,6 +72,8 @@ public class Inimigo1Script : MonoBehaviour
     void Die() {
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
+        
+
     }
 
     public void Jump() {
