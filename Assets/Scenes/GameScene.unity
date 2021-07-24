@@ -319,7 +319,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.84, y: 5.76}
+  m_Size: {x: 0.26, y: 0.31}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -354,6 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 7
   maxHealth: 100
+  currentHealth: 0
   olhandoDireita: 1
   animator: {fileID: 0}
   groundLayer:
@@ -396,7 +397,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.26, y: 0.31}
-    newSize: {x: 3.84, y: 5.76}
+    newSize: {x: 0.26, y: 0.31}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -736,6 +737,94 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1820947727}
     m_Modifications:
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: temSolo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: solo.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: visionRange
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: distanciaSolo
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: playerOponente
+      value: 
+      objectReference: {fileID: 528621111}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: atacante.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: distanciaPlayer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: distanciaAtacante
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: distanciaObstaculo
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: distanciaSoloCentro
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[0].x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[1].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[2].x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[3].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[4].x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[5].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[7].x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[8].x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[8].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[9].x
+      value: -0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -592628303620685736, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: posicao.Array.data[9].y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4173828803676968354, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
       propertyPath: m_Name
       value: Inimigo1
@@ -812,6 +901,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6474817916930609645, guid: 2fe3e5257962e564d9fdc5751c610085, type: 3}
+    - target: {fileID: 5624419678765442738, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6764804071669174254, guid: 52fa76251b0a7864b97b397e63866457, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -829,6 +922,110 @@ PrefabInstance:
     - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: attackRange
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: solo.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: distanciaSolo
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: playerOponente
+      value: 
+      objectReference: {fileID: 528621111}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: atacante.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: distanciaAtacante
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: distanciaOponente
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: distanciaObstaculo
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: distanciaSoloCentro
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[0].x
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[0].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[1].x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[1].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[2].x
+      value: -1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[2].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[3].x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[4].x
+      value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[5].x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[6].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[6].y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[7].x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[7].y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[8].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[8].y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[9].x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 127743699134484348, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: posicao.Array.data[9].y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4623984618336237015, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: attackRange
