@@ -213,15 +213,15 @@ public class Player1 : MonoBehaviour
         
         animator.SetBool("Dead", true);
 
-        Destroy(this);
+        //Destroy(this);
     }
 
     public void destroyPlayer()
     {
         // Avisar de alguma maneira o gamemanager que o jogo acabou!
-        DestroyImmediate(animator);
+        //DestroyImmediate(animator);
 
-        Destroy(this);
+        //Destroy(this);
 
 
     }
