@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 7
-  maxHealth: 100
+  maxHealth: 10000
   currentHealth: 0
   olhandoDireita: 1
   animator: {fileID: 0}
@@ -1038,6 +1038,30 @@ PrefabInstance:
     - target: {fileID: 4623984618336237015, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: olhandoDireita
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900993205553192353, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_Size.x
+      value: 1.9664536
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900993205553192353, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.1458168
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900993205553192353, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 1.1466666
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900993205553192353, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 4.706667
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900993205553192353, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.y
+      value: 2.1000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900993205553192353, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 2.4933333
       objectReference: {fileID: 0}
     - target: {fileID: 7900993205553192354, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: m_RootOrder
