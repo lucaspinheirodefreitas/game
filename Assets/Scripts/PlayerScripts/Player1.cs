@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player1 : MonoBehaviour
 {
@@ -61,13 +62,17 @@ public class Player1 : MonoBehaviour
                 playerStopJumpAnim();
                 Pulou = false;
             }
+        } else {
+            SceneManager.LoadScene("GameOver");
         }    
     }
 
     void FixedUpdate()
     {
-        if(dead)
+        if(dead) {
+            SceneManager.LoadScene("GameOver");
             return;
+        }
 
         Vector3 horizontal = new Vector3(horizontalMove, 0.0f, 0.0f);
 
