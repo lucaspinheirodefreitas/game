@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class Player1 : MonoBehaviour
 {
-    // Start is called before the first frame update
     public float Speed;
     public int maxHealth=100;
     public int currentHealth;
