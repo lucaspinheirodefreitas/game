@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2252514580005055000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 504393198514928943}
+  m_Layer: 0
+  m_Name: BreathAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &504393198514928943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252514580005055000}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.29260254, y: -0.33356762, z: -0.46101302}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7565806529768411827}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3970691804399670116
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +42,9 @@ GameObject:
   - component: {fileID: 8398202465252147811}
   - component: {fileID: 3236410581032846609}
   - component: {fileID: 446579075891910258}
+  - component: {fileID: 1764048592206365948}
+  - component: {fileID: 668483949612954792}
+  - component: {fileID: 7367295148754243209}
   m_Layer: 0
   m_Name: Demon Flying Breath Boss
   m_TagString: Untagged
@@ -29,7 +62,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -537.47656, y: -3.6988869, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 504393198514928943}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -116,7 +150,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.0272536, y: -0.29350162}
+  m_Offset: {x: 0.3816471, y: -0.29350162}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.31851754, y: 0.39855957}
@@ -127,5 +161,101 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.8, y: 4.65}
+  m_Size: {x: 4.503994, y: 4.65}
   m_EdgeRadius: 0
+--- !u!50 &1764048592206365948
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970691804399670116}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 200
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1.5
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!114 &668483949612954792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970691804399670116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859d8d4dd34d79a4695a0dcfacf442a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1000
+  animator: {fileID: 0}
+  noChao: 0
+  olhandoDireita: 0
+  Pulou: 0
+  Speed: 10
+  horizontalMove: 0
+  verticalMove: 0
+  attackPoint: {fileID: 504393198514928943}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  attackRange: 5
+  attackDamage: 200
+  tomandoDano: 0
+  attack: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &7367295148754243209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970691804399670116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ecc5e2da61aecd40a62839629b27a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 3970691804399670116}
+  playerOponente: {fileID: 0}
+  visionRange: 10
+  player:
+    serializedVersion: 2
+    m_Bits: 64
+  attackPoint: {fileID: 0}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  attackRange: 1.5
+  solo:
+    serializedVersion: 2
+    m_Bits: 8
+  atacante:
+    serializedVersion: 2
+    m_Bits: 128
+  posicao:
+  - {x: -1, y: 0, z: 0}
+  - {x: 1, y: 0, z: 0}
+  - {x: -1.2, y: 0, z: 0}
+  - {x: 1.2, y: 0, z: 0}
+  - {x: -0.4, y: 0, z: 0}
+  - {x: 0.4, y: 0, z: 0}
+  - {x: 1, y: -0.5, z: 0}
+  - {x: -1, y: -0.5, z: 0}
+  - {x: 2, y: 0.5, z: 0}
+  - {x: -2, y: 0.5, z: 0}
+  distanciaSolo: 10
+  distanciaSoloCentro: 2
+  distanciaObstaculo: 0.8
+  distanciaAtacante: 0.2
