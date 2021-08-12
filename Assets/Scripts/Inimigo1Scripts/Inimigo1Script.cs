@@ -23,7 +23,6 @@ public class Inimigo1Script : MonoBehaviour
     private LayerMask groundLayer;
     private Rigidbody2D rigidbody2D;
     private BoxCollider2D boxCollider2D;
-    float tempoProcessamento;
     public LayerMask GroundLayer  { 
         get {
             return groundLayer;
@@ -39,7 +38,6 @@ public class Inimigo1Script : MonoBehaviour
         rigidbody2D = GetComponent<Rigidbody2D>();
         attack = false;
         tomandoDano = false;
-        tempoProcessamento = 0.5f;  
     }
 
     void FixedUpdate() {
