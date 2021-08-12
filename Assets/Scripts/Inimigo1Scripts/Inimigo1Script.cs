@@ -43,8 +43,8 @@ public class Inimigo1Script : MonoBehaviour
     void FixedUpdate() {
         // TODO revisar necessidade
         if(tomandoDano && animator.GetBool("Dead") == false) {
-            Debug.Log("Inimigo morreu");
-            animator.SetTrigger("Inimigo1Damage");
+            //Debug.Log("Inimigo morreu");
+            //animator.SetTrigger("Inimigo1Damage");
         }
         
         //properFlip();

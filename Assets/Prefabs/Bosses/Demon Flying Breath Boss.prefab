@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 504393198514928943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BreathAttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2252514580005055000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.29260254, y: -0.33356762, z: -0.46101302}
+  m_LocalPosition: {x: -3.4, y: -1.3, z: -0.46101302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7565806529768411827}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1764048592206365948}
   - component: {fileID: 668483949612954792}
   - component: {fileID: 7367295148754243209}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Demon Flying Breath Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 3970691804399670116}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -537.47656, y: -3.6988869, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_Children:
   - {fileID: 504393198514928943}
   m_Father: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  attackRange: 5
+  attackRange: 2.5
   attackDamage: 200
   tomandoDano: 0
   attack: 0
