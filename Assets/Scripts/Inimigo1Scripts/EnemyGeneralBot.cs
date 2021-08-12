@@ -40,7 +40,6 @@ public class EnemyGeneralBot : MonoBehaviour
     float tempoProcessamento;
     public float distanciaObstaculo;
     public float distanciaAtacante;
-    public float distanciaPlayer;
     void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -62,7 +61,7 @@ public class EnemyGeneralBot : MonoBehaviour
             Object.Destroy(this);
         }
 
-        int detectPlayer = DetectPlayer(direcao);
+        int detectPlayer = DetectPlayer();
     
         if(detectPlayer != 0) {
             if(tempoProcessamento==0 && !oponente.isDie()) {
@@ -73,7 +72,7 @@ public class EnemyGeneralBot : MonoBehaviour
                     start = true;
                 }
                 else {
-                    direcao = detectPlayer; 
+                    direcao = ajusteDirecao*detectPlayer; 
                     if(verificacaoObstaculo(direcao)) {
                         pularObstaculo();
                     }
@@ -111,31 +110,37 @@ public class EnemyGeneralBot : MonoBehaviour
         return false;
     }
 
-    int DetectPlayer(int direcao)
+    int DetectPlayer()
     {
+        float TestLength = 0.1f, ajusteFlipRay=0;
 
         if(inimigo1Script.olhandoDireita) 
             ajusteDirecao = 1;
         else 
             ajusteDirecao = -1;
 
-        RaycastHit2D playerDireitaCentro = Raycast(new Vector2(posicao[6].x, posicao[6].y), Vector2.right, distanciaPlayer, enemyLayers);
-        RaycastHit2D playerDireitaCima = Raycast(new Vector2(posicao[6].x, posicao[6].y), new Vector2(1, 1), distanciaPlayer, enemyLayers);
-        RaycastHit2D playerDireitaBaixo = Raycast(new Vector2(posicao[6].x, posicao[6].y), new Vector2(1, -1), distanciaPlayer, enemyLayers);
-        RaycastHit2D playerDireitaMeioCima = Raycast(new Vector2(posicao[6].x, posicao[6].y), new Vector2(0.5f, 1), distanciaPlayer, enemyLayers);
-        RaycastHit2D playerDireitaMeioBaixo = Raycast(new Vector2(posicao[6].x, posicao[6].y), new Vector2(0.5f, -1), distanciaPlayer, enemyLayers);
-        RaycastHit2D playerEsquerdaCentro = Raycast(new Vector2(posicao[7].x, posicao[7].y), Vector2.left, distanciaPlayer, enemyLayers);            
-        RaycastHit2D playerEsquerdaBaixo = Raycast(new Vector2(posicao[7].x, posicao[7].y), new Vector2(-1, -1), distanciaPlayer, enemyLayers);
-        RaycastHit2D playerEsquerdaCima = Raycast(new Vector2(posicao[7].x, posicao[7].y), new Vector2(-1, 1), distanciaPlayer, enemyLayers);
-        RaycastHit2D playerEsquerdaMeioBaixo = Raycast(new Vector2(posicao[7].x, posicao[7].y), new Vector2(-1, -0.5f), distanciaPlayer, enemyLayers);
-        RaycastHit2D playerEsquerdaMeioCima = Raycast(new Vector2(posicao[7].x, posicao[7].y), new Vector2(-1, 0.5f), distanciaPlayer, enemyLayers);
+        Vector2 Start =  new Vector2(boxCollider2D.bounds.min.x + boxCollider2D.bounds.extents.x + TestLength + ajusteFlipRay, boxCollider2D.bounds.min.y + boxCollider2D.bounds.extents.y - TestLength);
+        Vector2 Direction = new Vector2((boxCollider2D.bounds.extents.x)*visionRange*ajusteDirecao, 0);
 
-        if (((playerDireitaCentro || playerDireitaBaixo || playerDireitaCima || playerDireitaMeioBaixo || playerDireitaMeioCima) && direcao<0)
-            || ((playerEsquerdaCentro || playerEsquerdaBaixo || playerEsquerdaCima || playerEsquerdaMeioBaixo || playerEsquerdaMeioCima) && direcao>0))
-            return direcao*-1;
-        else if(((playerEsquerdaCentro || playerEsquerdaBaixo || playerEsquerdaCima || playerEsquerdaMeioBaixo || playerEsquerdaMeioCima) && direcao<0) 
-                || ((playerDireitaCentro || playerDireitaBaixo || playerDireitaCima || playerDireitaMeioBaixo || playerDireitaMeioCima) && direcao>0))
-            return direcao;
+        RaycastHit2D hit2DSingleFront = Physics2D.Raycast(Start, Direction, Direction.magnitude, (player));
+        RaycastHit2D hit2DSingleBack = Physics2D.Raycast(Start, Direction*-1, Direction.magnitude, (player));
+
+        Color SingleRayColor;
+
+        SingleRayColor = Color.magenta;
+
+        if(hit2DSingleFront.collider != null || hit2DSingleBack.collider != null)
+            SingleRayColor = Color.blue;
+        else
+            SingleRayColor = Color.yellow;
+
+        Debug.DrawRay(Start,Direction,SingleRayColor);
+        Debug.DrawRay(Start,Direction*-1,SingleRayColor);
+
+        if (hit2DSingleFront.collider != null)
+            return 1;
+        else if(hit2DSingleBack.collider != null)
+            return -1;
         return 0;
     }
 
