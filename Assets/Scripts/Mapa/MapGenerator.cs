@@ -12,7 +12,8 @@ public class MapGenerator : MonoBehaviour
     void Generation()
     {
         int y = 0;
-        for (int x = 0; x < width; x++)
+        int x = 0;
+        for (x=0; x < width; x++)
         {
             
             int minHeight = height - 1;
@@ -38,6 +39,8 @@ public class MapGenerator : MonoBehaviour
                 y += 4;
             }
         }
+        //spawnObj(dirt, x + y, height - 1);
+        //spawnObj(grass, x + y, height);
         
     }
 
