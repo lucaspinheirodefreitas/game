@@ -9,6 +9,7 @@ public class Player1 : MonoBehaviour
     public int currentHealth;
     public bool olhandoDireita;
     public Animator animator;
+    public GameManager gameManager;
     private float horizontalMove;
     private float verticalMove;
     private bool noChao;
@@ -19,7 +20,6 @@ public class Player1 : MonoBehaviour
     private LayerMask groundLayer;
     private BoxCollider2D boxCollider2D;
     private Rigidbody2D rigidbody2D;
-
     public LayerMask GroundLayer 
     { 
         get
@@ -33,6 +33,7 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        gameManager = GetComponent<GameManager>();
         noChao = isGrounded();
         Pulou = false;
         currentHealth = maxHealth;
@@ -70,7 +71,7 @@ public class Player1 : MonoBehaviour
     void FixedUpdate()
     {
         if(dead) {
-            SceneManager.LoadScene("GameOver");
+            gameManager.GameOver = true;
             return;
         }
 
