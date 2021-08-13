@@ -12,8 +12,7 @@ public class MapGenerator : MonoBehaviour
     void Generation()
     {
         int y = 0;
-        int x = 0;
-        for (x=0; x < width; x++)
+        for (int x = 0; x < width; x++)
         {
             
             int minHeight = height - 1;
@@ -39,8 +38,6 @@ public class MapGenerator : MonoBehaviour
                 y += 4;
             }
         }
-        //spawnObj(dirt, x + y, height - 1);
-        //spawnObj(grass, x + y, height);
         
     }
 
@@ -57,7 +54,7 @@ public class MapGenerator : MonoBehaviour
 
         if (r == 6)
         {
-            inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 2), Quaternion.identity);
+            //inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 2), Quaternion.identity);
         }
 
     }

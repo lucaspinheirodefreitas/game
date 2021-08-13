@@ -40,16 +40,6 @@ public class Inimigo1Script : MonoBehaviour
         tomandoDano = false;
     }
 
-    void FixedUpdate() {
-        // TODO revisar necessidade
-        if(tomandoDano && animator.GetBool("Dead") == false) {
-            //Debug.Log("Inimigo morreu");
-            //animator.SetTrigger("Inimigo1Damage");
-        }
-        
-        //properFlip();
-    }
-
     public void TakeDamage(int damage) {
         tomandoDano = true;
         currentHealth -= damage;
