@@ -124,6 +124,7 @@ public class EnemyGeneralBot : MonoBehaviour
 
         RaycastHit2D hit2DSingleFront = Physics2D.Raycast(Start, Direction, Direction.magnitude, (player));
         RaycastHit2D hit2DSingleBack = Physics2D.Raycast(Start, Direction*-1, Direction.magnitude, (player));
+        RaycastHit2D hit2DBoxFront = Physics2D.BoxCast(Start, new Vector2(3, 5), 0, Direction, player);
 
         Color SingleRayColor;
 
@@ -137,7 +138,7 @@ public class EnemyGeneralBot : MonoBehaviour
         Debug.DrawRay(Start,Direction,SingleRayColor);
         Debug.DrawRay(Start,Direction*-1,SingleRayColor);
 
-        if (hit2DSingleFront.collider != null)
+        if (hit2DSingleFront.collider != null || hit2DBoxFront.collider != null)
             return 1;
         else if(hit2DSingleBack.collider != null)
             return -1;

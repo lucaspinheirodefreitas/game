@@ -70,7 +70,8 @@ public class Inimigo1Script : MonoBehaviour
     void Die() {
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
-        
+        //Destroy(this.boxCollider2D);
+        this.rigidbody2D.simulated = false;
 
     }
 
