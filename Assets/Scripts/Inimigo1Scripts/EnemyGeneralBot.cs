@@ -63,39 +63,42 @@ public class EnemyGeneralBot : MonoBehaviour
 
         int detectPlayer = DetectPlayer();
     
-        if(detectPlayer != 0) {
-            if(tempoProcessamento==0 && !oponente.isDie()) {
-                if(DetectAttackRange()) {  
-                    direcao = 0;
-                    inimigo1Script.enemyAttackAnim();
-                    tempoProcessamento=0.5f;
-                    start = true;
+        if (inimigo1Script.attack == false)
+        {
+            if(detectPlayer != 0) {
+                if(tempoProcessamento==0 && !oponente.isDie()) {
+                    if(DetectAttackRange()) {  
+                        direcao = 0;
+                        inimigo1Script.enemyAttackAnim();
+                        tempoProcessamento=0.5f;
+                        start = true;
+                    }
+                    else {
+                        direcao = ajusteDirecao*detectPlayer; 
+                        if(verificacaoObstaculo(direcao)) {
+                            pularObstaculo();
+                        }
+                    }
                 }
-                else {
-                    direcao = ajusteDirecao*detectPlayer; 
+            } else {
+                if (verificarEstaSolo() && start) {
+                    direcao = Random.Range(0, 2);
+                    direcao = direcao > 0 ? 1 : -1;
+                    start = false;
+                } else if (verificacaoAtacante(direcao)){
+                    direcao *= -1;
+                } else if(verificacaoSolo(direcao)) {
                     if(verificacaoObstaculo(direcao)) {
                         pularObstaculo();
                     }
-                }
+                } else {
+                    direcao *= -1;
+                } 
             }
-        } else {
-            if (verificarEstaSolo() && start) {
-                direcao = Random.Range(0, 2);
-                direcao = direcao > 0 ? 1 : -1;
-                start = false;
-            } else if (verificacaoAtacante(direcao)){
-                direcao *= -1;
-            } else if(verificacaoSolo(direcao)) {
-                if(verificacaoObstaculo(direcao)) {
-                    pularObstaculo();
-                }
-            } else {
-                direcao *= -1;
-            } 
+            inimigo1Script.Move((float) direcao);
+            inimigo1Script.properFlip(direcao);
+            tempoProcessamento = Mathf.Clamp(tempoProcessamento - Time.fixedDeltaTime, 0, Mathf.Infinity);
         }
-        inimigo1Script.Move((float) direcao);
-        inimigo1Script.properFlip(direcao);
-        tempoProcessamento = Mathf.Clamp(tempoProcessamento - Time.fixedDeltaTime, 0, Mathf.Infinity);
     }
 
     bool DetectAttackRange()

@@ -148,7 +148,13 @@ public class Inimigo1Script : MonoBehaviour
     }
     
     public void enemyAttackAnim() {
+        attack = true;
         animator.SetTrigger("AttackTrigger");                    
+    }
+
+    public void enemyAttackEnd()
+    {
+        attack = false;
     }
 
     void enemyAttackCollDetection()
