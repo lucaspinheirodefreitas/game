@@ -47,7 +47,7 @@ public class Inimigo1Script : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log("TempoAttack no update do "+ this.name + " = " + tempoAttack);
+        //Debug.Log("TempoAttack no update do "+ this.name + " = " + tempoAttack);
         tempoAttack = Mathf.Clamp((tempoAttack - Time.fixedDeltaTime), 0, attackFrequency);
     }
 
