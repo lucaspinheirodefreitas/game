@@ -77,8 +77,16 @@ public class Inimigo1Script : MonoBehaviour
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
         //Destroy(this.boxCollider2D);
-        this.rigidbody2D.simulated = false;
+        //this.rigidbody2D.simulated = false;
 
+    }
+    void dieEnd(){
+
+        Destroy(animator);
+        this.rigidbody2D.simulated = false;
+        //Destroy(this.gameObject);
+        Destroy(this);
+        
     }
 
     public void Jump() {
