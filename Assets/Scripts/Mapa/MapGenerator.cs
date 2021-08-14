@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] int width, height;
-    [SerializeField] GameObject dirt, grass, inimigo1, inimigoKnight;
+    [SerializeField] GameObject dirt, grass, inimigo1, inimigoKnight, player;
+    Vector3 vetor;
     void Start()
     {
         Generation();
@@ -21,6 +23,7 @@ public class MapGenerator : MonoBehaviour
 
             spawnObj(dirt, x + y, height - 1);
             spawnObj(grass, x + y, height);
+            vetor = new Vector3(x + y, height, 0.0f);
             y += 2;
             int r = Random.Range(1, 10);
             if(r == 1)
@@ -37,6 +40,7 @@ public class MapGenerator : MonoBehaviour
             {
                 y += 4;
             }
+
         }
         
     }
@@ -59,5 +63,13 @@ public class MapGenerator : MonoBehaviour
 
     }
 
+
+    void FixedUpdate()
+    {
+            if(Vector3.Distance(player.transform.position, vetor) < 5)
+            {
+                SceneManager.LoadScene("boss fight");
+            }
+    }
    
 }
