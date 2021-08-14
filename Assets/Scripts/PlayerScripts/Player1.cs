@@ -13,7 +13,6 @@ public class Player1 : MonoBehaviour
     // Audios clips
 
     public AudioSource playerAudioSource;
-    public AudioClip attackSound;
     public AudioClip runSound;
     public AudioClip jumpSound;
     public AudioClip hurtSound;
@@ -96,15 +95,29 @@ public class Player1 : MonoBehaviour
 
         Vector3 vertical = new Vector3(0.0f, verticalMove, 0.0f);
 
+        if(horizontalMove != 0)
+        {
+            if(!playerAudioSource.isPlaying)
+            {
+                Debug.Log("Tocando som de corrida do player1");
+                playerAudioSource.clip = runSound;
+                playerAudioSource.Play();
+            }
+        }
+        else
+        {
+            //playerAudioSource.Stop();
+        }
+
         if (horizontalMove > 0.5f)  // direita
         {
-
+            
             animator.SetFloat("Speed",  Speed);
 
         }
         else if (horizontalMove < -0.5f)   // esquerda
         {
-
+            
             animator.SetFloat("Speed", Speed);
 
         }
