@@ -34,7 +34,7 @@ public class Inimigo1Script : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = maxHealth * MapGenerator.level;
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         Pulou = false;

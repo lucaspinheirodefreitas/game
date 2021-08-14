@@ -11,7 +11,7 @@ public class ReturnFase : MonoBehaviour
     {
         if (Vector3.Distance(player.transform.position, lastTier.transform.position) < 3)
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene("Game");
         }
     }
 }

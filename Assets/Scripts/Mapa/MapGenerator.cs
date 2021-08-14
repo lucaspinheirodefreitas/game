@@ -6,6 +6,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] int width, height;
     [SerializeField] GameObject dirt, grass, inimigo1, inimigoKnight, player;
     Vector3 vetor;
+    public static int level = 1;
+
     void Start()
     {
         Generation();
@@ -51,16 +53,19 @@ public class MapGenerator : MonoBehaviour
         obj.transform.parent = this.transform;
 
         int r = Random.Range(1, 100);
-        if (r == 1 || r == 2 || r == 3)
-        {
-            inimigo1 = Instantiate(inimigo1, new Vector2(width, height + 1), Quaternion.identity);
-        }
 
-        if (r == 6)
+        for (int i = 0; i < level; i++)
         {
-            inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 1), Quaternion.identity);
-        }
+            if (r == 1 || r == 2 || r == 3)
+            {
+                inimigo1 = Instantiate(inimigo1, new Vector2(width, height + 1), Quaternion.identity);
+            }
 
+            if (r == 6)
+            {
+                inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 1), Quaternion.identity);
+            }
+        }
     }
 
 
@@ -69,6 +74,7 @@ public class MapGenerator : MonoBehaviour
             if(Vector3.Distance(player.transform.position, vetor) < 3)
             {
                 SceneManager.LoadScene(3);
+                level++;
             }
     }
 

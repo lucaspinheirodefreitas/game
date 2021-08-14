@@ -44,6 +44,7 @@ public class Fader : MonoBehaviour
         image.DOFade(1, duration)
             .OnComplete(() => { GameManager.Instance.GameOver = false; SceneManager.LoadScene("GameOver"); });
         SceneManager.LoadScene("GameOver");
+        MapGenerator.level = 1;
     }
 
     public void Flash()
