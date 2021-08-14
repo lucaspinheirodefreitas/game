@@ -40,16 +40,6 @@ public class Inimigo1Script : MonoBehaviour
         tomandoDano = false;
     }
 
-    void FixedUpdate() {
-        // TODO revisar necessidade
-        if(tomandoDano && animator.GetBool("Dead") == false) {
-            //Debug.Log("Inimigo morreu");
-            //animator.SetTrigger("Inimigo1Damage");
-        }
-        
-        //properFlip();
-    }
-
     public void TakeDamage(int damage) {
         tomandoDano = true;
         currentHealth -= damage;
@@ -70,7 +60,8 @@ public class Inimigo1Script : MonoBehaviour
     void Die() {
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
-        
+        //Destroy(this.boxCollider2D);
+        this.rigidbody2D.simulated = false;
 
     }
 
@@ -147,7 +138,13 @@ public class Inimigo1Script : MonoBehaviour
     }
     
     public void enemyAttackAnim() {
+        attack = true;
         animator.SetTrigger("AttackTrigger");                    
+    }
+
+    public void enemyAttackEnd()
+    {
+        attack = false;
     }
 
     void enemyAttackCollDetection()

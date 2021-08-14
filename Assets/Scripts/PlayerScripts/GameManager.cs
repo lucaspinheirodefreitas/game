@@ -32,6 +32,6 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
-            Application.Quit();
+            Application.Quit();            
     }
 }
