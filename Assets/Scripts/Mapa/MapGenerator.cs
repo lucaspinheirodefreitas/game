@@ -54,7 +54,7 @@ public class MapGenerator : MonoBehaviour
 
         if (r == 6)
         {
-            inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 2), Quaternion.identity);
+            //inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 2), Quaternion.identity);
         }
 
     }

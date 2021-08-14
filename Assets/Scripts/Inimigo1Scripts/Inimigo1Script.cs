@@ -23,7 +23,6 @@ public class Inimigo1Script : MonoBehaviour
     private LayerMask groundLayer;
     private Rigidbody2D rigidbody2D;
     private BoxCollider2D boxCollider2D;
-    float tempoProcessamento;
     public LayerMask GroundLayer  { 
         get {
             return groundLayer;
@@ -39,17 +38,6 @@ public class Inimigo1Script : MonoBehaviour
         rigidbody2D = GetComponent<Rigidbody2D>();
         attack = false;
         tomandoDano = false;
-        tempoProcessamento = 0.5f;  
-    }
-
-    void FixedUpdate() {
-        // TODO revisar necessidade
-        if(tomandoDano && animator.GetBool("Dead") == false) {
-            Debug.Log("Inimigo morreu");
-            animator.SetTrigger("Inimigo1Damage");
-        }
-        
-        //properFlip();
     }
 
     public void TakeDamage(int damage) {
@@ -72,7 +60,8 @@ public class Inimigo1Script : MonoBehaviour
     void Die() {
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
-        
+        //Destroy(this.boxCollider2D);
+        this.rigidbody2D.simulated = false;
 
     }
 
@@ -149,7 +138,13 @@ public class Inimigo1Script : MonoBehaviour
     }
     
     public void enemyAttackAnim() {
+        attack = true;
         animator.SetTrigger("AttackTrigger");                    
+    }
+
+    public void enemyAttackEnd()
+    {
+        attack = false;
     }
 
     void enemyAttackCollDetection()

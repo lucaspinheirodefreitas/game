@@ -7,18 +7,21 @@ public class Player1 : MonoBehaviour
     public int maxHealth=100;
     public int currentHealth;
     public bool olhandoDireita;
+    public Vector3[] posicao;
+
     public Animator animator;
+    public GameManager gameManager;
     private float horizontalMove;
     private float verticalMove;
     private bool noChao;
     private bool dead;
     private bool Pulou;
+    private bool caiu;
 
     [SerializeField]
     private LayerMask groundLayer;
     private BoxCollider2D boxCollider2D;
     private Rigidbody2D rigidbody2D;
-
     public LayerMask GroundLayer 
     { 
         get
@@ -32,15 +35,17 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        gameManager = GetComponent<GameManager>();
         noChao = isGrounded();
         Pulou = false;
         currentHealth = maxHealth;
         dead = false;
+        caiu = !verificacaoSolo();
     }
 
     void Update()
     {
-        if (!dead)
+        if (!dead && !caiu)
         {
             horizontalMove = Input.GetAxisRaw("Horizontal");
             verticalMove   = Input.GetAxisRaw("Vertical");
@@ -62,14 +67,15 @@ public class Player1 : MonoBehaviour
                 Pulou = false;
             }
         } else {
+            GameManager.Instance.GameOver=true;
             SceneManager.LoadScene("GameOver");
         }    
     }
 
     void FixedUpdate()
     {
-        if(dead) {
-            SceneManager.LoadScene("GameOver");
+        caiu = !verificacaoSolo();
+        if(dead || caiu) {
             return;
         }
 
@@ -218,6 +224,29 @@ public class Player1 : MonoBehaviour
         animator.SetBool("Dead", true);
 
         //Destroy(this);
+    }
+
+
+    // verifica se caiu num abismo
+    private bool verificacaoSolo() {
+        float distancia = 50.0f;
+        RaycastHit2D soloEsq = Raycast(new Vector2(posicao[0].x, posicao[0].y), new Vector2(-1,-1), distancia, groundLayer);
+        RaycastHit2D soloDir = Raycast(new Vector2(posicao[1].x, posicao[1].y), new Vector2(1,-1), distancia, groundLayer);
+        RaycastHit2D soloEsqDuplo = Raycast(new Vector2(posicao[2].x, posicao[2].y), Vector2.down, distancia, groundLayer);
+        RaycastHit2D soloDirDuplo = Raycast(new Vector2(posicao[3].x, posicao[3].y), Vector2.down, distancia, groundLayer);
+
+        return ((soloDir || soloDirDuplo || soloEsq || soloEsqDuplo));
+    }
+
+    // se detectar objeto com a mascara informada e com a distantia informada retorna raio verde, caso contrario retorna raio vermelho.
+    private RaycastHit2D Raycast(Vector3 origem, Vector2 direcaoRaio, float distanciaSolo, LayerMask mask) {
+        Vector3 posicaoAtual = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(posicaoAtual + origem, direcaoRaio, distanciaSolo, mask);
+        Color corRaio = hit ? Color.green : Color.red;
+
+        Debug.DrawRay(posicaoAtual + origem, direcaoRaio*distanciaSolo, corRaio);
+
+        return hit;
     }
 
     public void destroyPlayer()
