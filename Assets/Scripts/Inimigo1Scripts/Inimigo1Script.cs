@@ -17,6 +17,9 @@ public class Inimigo1Script : MonoBehaviour
     public LayerMask enemyLayers;
     public float attackRange=0.5f;
     public int attackDamage = 20;
+
+    public float attackFrequency = 0.9f;
+    float tempoAttack;
     public bool tomandoDano;
     public bool attack;
     [SerializeField]
@@ -38,11 +41,20 @@ public class Inimigo1Script : MonoBehaviour
         rigidbody2D = GetComponent<Rigidbody2D>();
         attack = false;
         tomandoDano = false;
+        tempoAttack = attackFrequency;
+        Debug.Log("TempoAttack no start do "+ this.name + " = " + tempoAttack);
+    }
+
+    void FixedUpdate()
+    {
+        //Debug.Log("TempoAttack no update do "+ this.name + " = " + tempoAttack);
+        tempoAttack = Mathf.Clamp((tempoAttack - Time.fixedDeltaTime), 0, attackFrequency);
     }
 
     public void TakeDamage(int damage) {
 
-        
+        if(attack == false)
+        {
             tomandoDano = true;
             currentHealth -= damage;
 
@@ -53,7 +65,7 @@ public class Inimigo1Script : MonoBehaviour
 
             if(currentHealth <= 0)
                 Die();
-
+        }
 
     }
 
@@ -65,8 +77,16 @@ public class Inimigo1Script : MonoBehaviour
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
         //Destroy(this.boxCollider2D);
-        this.rigidbody2D.simulated = false;
+        //this.rigidbody2D.simulated = false;
 
+    }
+    void dieEnd(){
+
+        Destroy(animator);
+        this.rigidbody2D.simulated = false;
+        //Destroy(this.gameObject);
+        Destroy(this);
+        
     }
 
     public void Jump() {
@@ -142,13 +162,24 @@ public class Inimigo1Script : MonoBehaviour
     }
     
     public void enemyAttackAnim() {
-        attack = true;
-        animator.SetTrigger("AttackTrigger");                    
+
+        Debug.Log("TempoAttack na hora da chamada do attack = " + tempoAttack);
+        if(tempoAttack == 0)
+        {
+            
+            attack = true;
+            animator.SetTrigger("AttackTrigger");
+            //tempoAttack = attackFrequency;
+
+        }
+
+                            
     }
 
     public void enemyAttackEnd()
     {
         attack = false;
+        tempoAttack = attackFrequency;
     }
 
     void enemyAttackCollDetection()

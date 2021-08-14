@@ -61,8 +61,9 @@ public class EnemyGeneralBot : MonoBehaviour
     }
     void FixedUpdate() {
         if(inimigo1Script.animator.GetBool("Dead")) {
-            enemy.layer = LayerMask.NameToLayer("ChaoTiles");;
-            Object.Destroy(inimigo1Script);
+            //enemy.layer = LayerMask.NameToLayer("ChaoTiles");;
+            //Object.Destroy(inimigo1Script);
+            
             Object.Destroy(this);
         }
         if(inimigo1Script.attack != true){

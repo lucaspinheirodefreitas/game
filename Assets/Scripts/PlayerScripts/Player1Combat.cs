@@ -10,6 +10,9 @@ public class Player1Combat : MonoBehaviour
     public GameObject playerGameObject;
     public float attackRange=0.5f;
     public int attackDamage = 20;
+
+    public float attackFrequency=0.5f;
+    float tempoAttack;
     public Animator animator;
     public LayerMask enemyLayers;
 
@@ -18,15 +21,18 @@ public class Player1Combat : MonoBehaviour
     {
         player1Script = playerGameObject.GetComponent<Player1>();
         animator = GetComponent<Animator>();
+        tempoAttack= attackFrequency;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Z) && (player1Script.isGrounded()))
+        tempoAttack = Mathf.Clamp((tempoAttack - Time.deltaTime), 0, Mathf.Infinity);
+        if(Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Z) && (player1Script.isGrounded()) && (tempoAttack == 0))
         {
             
             playerAttackAnim();
+            tempoAttack = attackFrequency;
         }
     }
 
