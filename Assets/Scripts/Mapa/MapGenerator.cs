@@ -51,7 +51,7 @@ public class MapGenerator : MonoBehaviour
         obj.transform.parent = this.transform;
 
         int r = Random.Range(1, 100);
-        if (r == 1 || r == 2 || r == 3 || r == 4 || r == 5)
+        if (r == 1 || r == 2 || r == 3)
         {
             inimigo1 = Instantiate(inimigo1, new Vector2(width, height + 1), Quaternion.identity);
         }
@@ -66,7 +66,7 @@ public class MapGenerator : MonoBehaviour
 
     void FixedUpdate()
     {
-            if(Vector3.Distance(player.transform.position, vetor) < 5)
+            if(Vector3.Distance(player.transform.position, vetor) < 3)
             {
                 SceneManager.LoadScene("boss fight");
             }

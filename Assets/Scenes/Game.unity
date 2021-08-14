@@ -870,6 +870,7 @@ MonoBehaviour:
   grass: {fileID: 2705923293273943562, guid: 486a9452a8c6dd0429f91c406fce966e, type: 3}
   inimigo1: {fileID: 1524217569}
   inimigoKnight: {fileID: 1438312541}
+  player: {fileID: 528621111}
 --- !u!4 &1463054095
 Transform:
   m_ObjectHideFlags: 0
