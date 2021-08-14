@@ -68,8 +68,15 @@ public class MapGenerator : MonoBehaviour
     {
             if(Vector3.Distance(player.transform.position, vetor) < 3)
             {
-                SceneManager.LoadScene("boss fight");
+                SceneManager.LoadScene(3);
             }
     }
-   
+
+
+    void LateUpdate()
+    {
+        player.SetActive(true);
+    }
+
+
 }
