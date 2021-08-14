@@ -16,7 +16,7 @@ TagManager:
   - Enemy1
   - Knight
   - Boss
-  - 
+  - background image
   - 
   - 
   - 
@@ -39,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: backgorund image
+    uniqueID: 3825249591
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer
+    uniqueID: 2273275021
     locked: 0
