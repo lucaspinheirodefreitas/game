@@ -20,6 +20,7 @@ public class Player1Combat : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Z))
         {
+            
             playerAttackAnim();
         }
     }
@@ -28,19 +29,26 @@ public class Player1Combat : MonoBehaviour
     void playerAttackAnim()
     {
 
+        animator.SetBool("Attack", true);
         animator.SetTrigger("AttackTrigger");
                                  
     }
 
+    void playerStopAttackAnim()
+    {
+        animator.SetBool("Attack", false);
+    }
+
     void playerAttackCollDetection()
     {
+        Debug.Log("Analisando colisao de ataque...");
         Collider2D[] hitEnemies =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit "+ enemy.name);
-            Debug.Log("Tipo do inimigo = " + enemy.GetType());
+            Debug.Log("Tipo do inimigo = " + enemy.GetType().ToString());
             System.Type i = enemy.GetType();
-            enemy.GetComponent<Inimigo1>().TakeDamage(attackDamage);
+            enemy.GetComponent<Inimigo1Script>().TakeDamage(attackDamage);
         }
     }
 
@@ -51,6 +59,6 @@ public class Player1Combat : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
-
+    
 
 }

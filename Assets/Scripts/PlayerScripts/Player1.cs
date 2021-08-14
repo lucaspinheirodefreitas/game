@@ -1,24 +1,28 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player1 : MonoBehaviour
 {
     // Start is called before the first frame update
     public float Speed;
+    public int maxHealth=100;
+    public int currentHealth;
     public bool olhandoDireita;
-    public Animator animator;
+    public Vector3[] posicao;
 
+    public Animator animator;
+    public GameManager gameManager;
     private float horizontalMove;
     private float verticalMove;
     private bool noChao;
-    
-
+    private bool dead;
     private bool Pulou;
+    private bool caiu;
 
     [SerializeField]
     private LayerMask groundLayer;
     private BoxCollider2D boxCollider2D;
     private Rigidbody2D rigidbody2D;
-
     public LayerMask GroundLayer 
     { 
         get
@@ -32,34 +36,49 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        gameManager = GetComponent<GameManager>();
         noChao = isGrounded();
         Pulou = false;
-
+        currentHealth = maxHealth;
+        dead = false;
+        caiu = !verificacaoSolo();
     }
 
     void Update()
     {
-
-        horizontalMove = Input.GetAxisRaw("Horizontal");
-        verticalMove   = Input.GetAxisRaw("Vertical");
-        noChao = isGrounded();
-
-        if((Input.GetKeyDown(KeyCode.UpArrow)|| Input.GetKeyDown(KeyCode.Space)))
+        if (!dead && !caiu)
         {
-            Pulou = true;
-            playerJump();
-        }
-        else
-        {
-            playerStopJumpAnim();
-            Pulou = false;
-        }
-            
+            horizontalMove = Input.GetAxisRaw("Horizontal");
+            verticalMove   = Input.GetAxisRaw("Vertical");
+            noChao = isGrounded();
+
+            if((Input.GetKeyDown(KeyCode.UpArrow)|| Input.GetKeyDown(KeyCode.Space)))
+            {
+                Pulou = true;
+                playerJump();
+
+            }
+            else if(rigidbody2D.velocity.y < 0)
+            {
+                animator.SetBool("Falling", true);
+            }
+            else
+            {
+                playerStopJumpAnim();
+                Pulou = false;
+            }
+        } else {
+            GameManager.Instance.GameOver=true;
+            SceneManager.LoadScene("GameOver");
+        }    
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
+        caiu = !verificacaoSolo();
+        if(dead || caiu) {
+            return;
+        }
 
         Vector3 horizontal = new Vector3(horizontalMove, 0.0f, 0.0f);
 
@@ -94,21 +113,19 @@ public class Player1 : MonoBehaviour
 
         if (noChao && Pulou)
         {
-
-            //transform.position = transform.position + vertical * (Mathf.Clamp((Time.deltaTime * Speed), 0, Speed));
-            rigidbody2D.velocity = Vector2.up * Speed;
-            //Debug.Log("Pulou!");
+            rigidbody2D.velocity = Vector2.up * (Speed*1.2f);
             animator.SetFloat("Jump", Speed);
+            
         }
 
     }
 
     void playerStopJumpAnim()
     {
-        // 
         if(noChao && rigidbody2D.velocity.y <0.1f)
         {
             animator.SetFloat("Jump", 0f);
+            animator.SetBool("Falling", false);
         }
     }
 
@@ -152,8 +169,6 @@ public class Player1 : MonoBehaviour
         Vector2 Start =  new Vector2(boxCollider2D.bounds.min.x + TestLength + ajusteFlipRay, boxCollider2D.bounds.min.y - TestLength);
         Vector2 Direction = new Vector2((boxCollider2D.bounds.extents.x), 0);
 
-        //if ()
-
         RaycastHit2D hit2DSingle = Physics2D.Raycast(Start, Direction, Direction.magnitude, groundLayer);
         Color SingleRayColor;
 
@@ -161,17 +176,13 @@ public class Player1 : MonoBehaviour
 
         if(hit2DSingle.collider != null)
         {
-            //Debug.Log(hit2DSingle.collider);
             SingleRayColor = Color.green;
         }
         else
         {
             SingleRayColor = Color.red;
         }
-        
-        //Debug.Log("Tamanho do riao do isGrounded = " + hit2DSingle.centroid.magnitude);
-
-        //Debug.DrawRay(Start,Direction,SingleRayColor);
+        Debug.DrawRay(Start,Direction,SingleRayColor);
 
         return hit2DSingle.collider != null;
 
@@ -181,14 +192,72 @@ public class Player1 : MonoBehaviour
     {
         if((Input.GetAxis("Horizontal") < 0 && olhandoDireita) || (Input.GetAxis("Horizontal") > 0 && !olhandoDireita))
         {
-            //Debug.Log("Vai flipar");
-            //Debug.Log("Rotaçao inicial = " + transform.rotation);
-            //Debug.Log("Flipou!");
             olhandoDireita = !olhandoDireita;
             transform.Rotate(new Vector3(0, 180, 0));
-            //Debug.Log("Rotaçao final = " + transform.rotation);
-
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        // animacao de machucar
+        Debug.Log("Vida atual = " + currentHealth);
+
+        animator.SetTrigger("Player1Damage");
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+
+    }
+
+    public bool isDie() {
+        return dead;
+    }
+    void Die()
+    {
+        dead = true;
+        Debug.Log("Enemy "+ this.name + " died!");
+
+        
+        animator.SetBool("Dead", true);
+
+        //Destroy(this);
+    }
+
+
+    // verifica se caiu num abismo
+    private bool verificacaoSolo() {
+        float distancia = 50.0f;
+        RaycastHit2D soloEsq = Raycast(new Vector2(posicao[0].x, posicao[0].y), new Vector2(-1,-1), distancia, groundLayer);
+        RaycastHit2D soloDir = Raycast(new Vector2(posicao[1].x, posicao[1].y), new Vector2(1,-1), distancia, groundLayer);
+        RaycastHit2D soloEsqDuplo = Raycast(new Vector2(posicao[2].x, posicao[2].y), Vector2.down, distancia, groundLayer);
+        RaycastHit2D soloDirDuplo = Raycast(new Vector2(posicao[3].x, posicao[3].y), Vector2.down, distancia, groundLayer);
+
+        return ((soloDir || soloDirDuplo || soloEsq || soloEsqDuplo));
+    }
+
+    // se detectar objeto com a mascara informada e com a distantia informada retorna raio verde, caso contrario retorna raio vermelho.
+    private RaycastHit2D Raycast(Vector3 origem, Vector2 direcaoRaio, float distanciaSolo, LayerMask mask) {
+        Vector3 posicaoAtual = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(posicaoAtual + origem, direcaoRaio, distanciaSolo, mask);
+        Color corRaio = hit ? Color.green : Color.red;
+
+        Debug.DrawRay(posicaoAtual + origem, direcaoRaio*distanciaSolo, corRaio);
+
+        return hit;
+    }
+
+    public void destroyPlayer()
+    {
+        // Avisar de alguma maneira o gamemanager que o jogo acabou!
+        //DestroyImmediate(animator);
+
+        //Destroy(this);
+
+
     }
 
 }
