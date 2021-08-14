@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
 
     public Transform Jogador;
     public Vector3 offset;
+    [SerializeField] GameObject bg;
 
     public float smoothSpeed = 0.125f;
 
@@ -28,6 +29,7 @@ public class CameraController : MonoBehaviour
         yCamera = Mathf.Lerp(yCamera, yDesired,smoothSpeed);
             
         transform.position = new Vector3(Jogador.position.x + offset.x, yCamera + offset.y, offset.z);
+        bg.transform.position = new Vector3(Jogador.position.x + offset.x, yCamera + offset.y, 2);
     }
 
 }
