@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 7
-  maxHealth: 10000
+  maxHealth: 1000
   currentHealth: 0
   olhandoDireita: 1
   posicao:
@@ -448,12 +448,13 @@ MonoBehaviour:
   attackPoint: {fileID: 415612725}
   playerGameObject: {fileID: 528621111}
   attackRange: 0.5
-  attackDamage: 200
+  attackDamage: 50
+  attackFrequency: 0.7
   animator: {fileID: 0}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
-  inimigo1Script: {fileID: 0}
+  player1Script: {fileID: 0}
 --- !u!1 &570677225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1393,10 @@ PrefabInstance:
     - target: {fileID: 4623984618336237015, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: olhandoDireita
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623984618336237015, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
+      propertyPath: attackFrequency
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5155531574953791607, guid: 07d2c85305577574c88d33a820c8c8a8, type: 3}
       propertyPath: m_Layer

@@ -179,7 +179,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 500
   animator: {fileID: 0}
+  noChao: 0
   olhandoDireita: 0
+  Pulou: 0
   Speed: 5
   horizontalMove: 0
   verticalMove: 0
@@ -189,6 +191,7 @@ MonoBehaviour:
     m_Bits: 64
   attackRange: 1.5
   attackDamage: 300
+  attackFrequency: 3
   tomandoDano: 0
   attack: 0
   groundLayer:
@@ -207,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 7900993205553192355}
+  playerOponente: {fileID: 0}
   visionRange: 10
   player:
     serializedVersion: 2
@@ -216,6 +220,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackRange: 1
+  solo:
+    serializedVersion: 2
+    m_Bits: 0
+  atacante:
+    serializedVersion: 2
+    m_Bits: 0
+  posicao: []
+  distanciaSolo: 0
+  distanciaSoloCentro: 0
+  distanciaObstaculo: 0
+  distanciaAtacante: 0
 --- !u!95 &6019180887277176776
 Animator:
   serializedVersion: 3
