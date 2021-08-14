@@ -210,12 +210,18 @@ MonoBehaviour:
     m_Bits: 64
   attackRange: 2.5
   attackDamage: 200
-  attackFrequency: 2
+  attackFrequency: 1.5
   tomandoDano: 0
   attack: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  enemyAudioSource: {fileID: 0}
+  runSound: {fileID: 8300000, guid: 241f4be7ab64c584aabe3c84fb50394e, type: 3}
+  jumpSound: {fileID: 8300000, guid: 241f4be7ab64c584aabe3c84fb50394e, type: 3}
+  hurtSound: {fileID: 8300000, guid: cb52354c2f3f4854aad0e9351b91684f, type: 3}
+  dieSound: {fileID: 8300000, guid: 20cf854cfbf896b4bb5c30e6fd4319cb, type: 3}
+  attackSound: {fileID: 8300000, guid: 964a374e527d2e449a79390674220b19, type: 3}
 --- !u!114 &7367295148754243209
 MonoBehaviour:
   m_ObjectHideFlags: 0

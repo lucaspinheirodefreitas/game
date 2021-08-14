@@ -32,8 +32,17 @@ public class Inimigo1Script : MonoBehaviour
         }
     }
 
+    // audios
+    public AudioSource enemyAudioSource;
+    public AudioClip runSound;
+    public AudioClip jumpSound;
+    public AudioClip hurtSound;
+    public AudioClip dieSound;
+    public AudioClip attackSound;
+
     void Start()
     {
+        enemyAudioSource = GetComponent<AudioSource>();
         currentHealth = maxHealth * MapGenerator.level;
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -55,6 +64,9 @@ public class Inimigo1Script : MonoBehaviour
 
         if(attack == false)
         {
+
+            enemyAudioSource.clip = hurtSound;
+            enemyAudioSource.Play();
             tomandoDano = true;
             currentHealth -= damage;
 
@@ -74,6 +86,9 @@ public class Inimigo1Script : MonoBehaviour
     }
 
     void Die() {
+
+        enemyAudioSource.clip = dieSound;
+        enemyAudioSource.Play();
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
         //Destroy(this.boxCollider2D);
@@ -82,15 +97,17 @@ public class Inimigo1Script : MonoBehaviour
     }
     void dieEnd(){
 
-        Destroy(animator);
+        //Destroy(animator);
         this.rigidbody2D.simulated = false;
         //Destroy(this.gameObject);
-        Destroy(this);
+        //Destroy(this);
         
     }
 
     public void Jump() {
         if (noChao && Pulou) {
+            enemyAudioSource.clip = jumpSound;
+            enemyAudioSource.Play();
             rigidbody2D.velocity = Vector2.up * Speed;
             animator.SetFloat("Jump", Speed);
         }
@@ -153,7 +170,11 @@ public class Inimigo1Script : MonoBehaviour
         Vector3 horizontal = new Vector3(direcao, 0.0f, 0.0f);
         transform.position = transform.position + (((horizontal * Time.deltaTime * Speed)));
         if (direcao > 0 || direcao < 0)  // direita
+        {
             animator.SetFloat("Speed",  Speed);
+            enemyAudioSource.clip = runSound;
+            enemyAudioSource.Play();
+        }
         else
            animator.SetFloat("Speed", 0.0f);
         
@@ -166,7 +187,8 @@ public class Inimigo1Script : MonoBehaviour
         Debug.Log("TempoAttack na hora da chamada do attack = " + tempoAttack);
         if(tempoAttack == 0)
         {
-            
+            enemyAudioSource.clip = attackSound;
+            enemyAudioSource.Play();
             attack = true;
             animator.SetTrigger("AttackTrigger");
             //tempoAttack = attackFrequency;
