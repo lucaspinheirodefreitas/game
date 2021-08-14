@@ -7,6 +7,9 @@ public class Player1Combat : MonoBehaviour
     // Start is called before the first frame update
     public Transform attackPoint;
 
+    public AudioSource playerAudioSource;
+    public AudioClip attackSound;
+
     public GameObject playerGameObject;
     public float attackRange=0.5f;
     public int attackDamage = 20;
@@ -19,6 +22,7 @@ public class Player1Combat : MonoBehaviour
     public Player1 player1Script;
     void Start()
     {
+        playerAudioSource = GetComponent<AudioSource>();
         player1Script = playerGameObject.GetComponent<Player1>();
         animator = GetComponent<Animator>();
         tempoAttack= attackFrequency;
@@ -39,6 +43,8 @@ public class Player1Combat : MonoBehaviour
 
     void playerAttackAnim()
     {
+        playerAudioSource.clip = attackSound;
+        playerAudioSource.Play();
 
         animator.SetBool("Attack", true);
         animator.SetTrigger("AttackTrigger");

@@ -10,6 +10,15 @@ public class Player1 : MonoBehaviour
     public bool olhandoDireita;
     public Vector3[] posicao;
 
+    // Audios clips
+
+    public AudioSource playerAudioSource;
+    public AudioClip attackSound;
+    public AudioClip runSound;
+    public AudioClip jumpSound;
+    public AudioClip hurtSound;
+    public AudioClip dieSound;
+
     public Animator animator;
     public GameManager gameManager;
     private float horizontalMove;
@@ -33,6 +42,7 @@ public class Player1 : MonoBehaviour
 
     void Start()
     {
+        playerAudioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -113,6 +123,8 @@ public class Player1 : MonoBehaviour
 
         if (noChao && Pulou)
         {
+            playerAudioSource.clip = jumpSound;
+            playerAudioSource.Play();
             rigidbody2D.velocity = Vector2.up * (Speed*1.2f);
             animator.SetFloat("Jump", Speed);
             
@@ -201,6 +213,9 @@ public class Player1 : MonoBehaviour
     {
         currentHealth -= damage;
 
+        playerAudioSource.clip = hurtSound;
+        playerAudioSource.Play();
+
         // animacao de machucar
         Debug.Log("Vida atual = " + currentHealth);
 
@@ -219,6 +234,8 @@ public class Player1 : MonoBehaviour
     void Die()
     {
         dead = true;
+        playerAudioSource.clip = dieSound;
+        playerAudioSource.Play();
         Debug.Log("Enemy "+ this.name + " died!");
 
         
