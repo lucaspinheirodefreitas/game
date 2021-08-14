@@ -463,9 +463,9 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 0}
   playerAudioSource: {fileID: 0}
   runSound: {fileID: 8300000, guid: b4e01ca0d2f79af4ab162af92f372d56, type: 3}
-  jumpSound: {fileID: 0}
-  hurtSound: {fileID: 0}
-  dieSound: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: c3b9d040c8604704b95584d11c363dd7, type: 3}
+  hurtSound: {fileID: 8300000, guid: 27fcca54599de0b49836891ba9b9f0c1, type: 3}
+  dieSound: {fileID: 8300000, guid: 27fcca54599de0b49836891ba9b9f0c1, type: 3}
   animator: {fileID: 0}
   gameManager: {fileID: 0}
   groundLayer:
