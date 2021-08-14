@@ -65,48 +65,50 @@ public class EnemyGeneralBot : MonoBehaviour
             Object.Destroy(inimigo1Script);
             Object.Destroy(this);
         }
-        detectPlayer = DetectPlayer(direcao);
-        if(tempoProcessamento==0) {
-            if(detectPlayer != 0) {
-                if(tempoProcessamento==0 && !oponente.isDie()) {
-                    if(DetectAttackRange()) { 
-                        Debug.Log("Ataque identificado") ;
-                        direcaoAnterior = direcao;
-                        direcao = 0;
-                        inimigo1Script.enemyAttackAnim();
-                        tempoProcessamento=0.5f;
-                        sumiu = true;
+        if(inimigo1Script.attack != true){
+            detectPlayer = DetectPlayer(direcao);
+            if(tempoProcessamento==0) {
+                if(detectPlayer != 0) {
+                    if(tempoProcessamento==0 && !oponente.isDie()) {
+                        if(DetectAttackRange()) { 
+                            Debug.Log("Ataque identificado") ;
+                            direcaoAnterior = direcao;
+                            direcao = 0;
+                            inimigo1Script.enemyAttackAnim();
+                            tempoProcessamento=0.5f;
+                            sumiu = true;
+                        }
+                        else {
+                            Debug.Log("Ataque FORA RANGE") ;
+                            direcao = direcao*detectPlayer; 
+                            if(verificacaoObstaculo(direcao)) {
+                                pularObstaculo();
+                            }
+                        }
                     }
-                    else {
-                        Debug.Log("Ataque FORA RANGE") ;
-                        direcao = direcao*detectPlayer; 
+                } else {
+                    if (start) {
+                        direcao = Random.Range(0, 2);
+                        direcao = direcao > 0 ? 1 : -1;
+                        start = false;
+                    } if (sumiu && direcao==0) {
+                        sumiu = false;
+                        direcao = direcaoAnterior;
+                    } else if (verificacaoAtacante(direcao)){
+                        direcao *= -1;
+                    } else if(verificacaoSolo(direcao)) {
                         if(verificacaoObstaculo(direcao)) {
                             pularObstaculo();
                         }
+                    } else if(sumiu){
+                        direcao *= 1;
+                    } else {
+                        direcao *= -1;
                     }
                 }
-            } else {
-                if (start) {
-                    direcao = Random.Range(0, 2);
-                    direcao = direcao > 0 ? 1 : -1;
-                    start = false;
-                } if (sumiu && direcao==0) {
-                    sumiu = false;
-                    direcao = direcaoAnterior;
-                } else if (verificacaoAtacante(direcao)){
-                    direcao *= -1;
-                } else if(verificacaoSolo(direcao)) {
-                    if(verificacaoObstaculo(direcao)) {
-                        pularObstaculo();
-                    }
-                } else if(sumiu){
-                    direcao *= 1;
-                } else {
-                    direcao *= -1;
-                }
+            inimigo1Script.Move((float) direcao);
+            inimigo1Script.properFlip((int)direcao);
             }
-        inimigo1Script.Move((float) direcao);
-        inimigo1Script.properFlip((int)direcao);
         }
         tempoProcessamento = Mathf.Clamp(tempoProcessamento - Time.fixedDeltaTime, 0, Mathf.Infinity);
     }

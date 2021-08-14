@@ -41,15 +41,19 @@ public class Inimigo1Script : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
-        tomandoDano = true;
-        currentHealth -= damage;
 
-        Debug.Log("Vida atual = " + currentHealth);
+        
+            tomandoDano = true;
+            currentHealth -= damage;
 
-        animator.SetTrigger("Inimigo1Damage");
+            Debug.Log("Vida atual = " + currentHealth);
 
-        if(currentHealth <= 0)
-            Die();
+            //if(attack == false)
+            animator.SetTrigger("Inimigo1Damage");
+
+            if(currentHealth <= 0)
+                Die();
+
 
     }
 
