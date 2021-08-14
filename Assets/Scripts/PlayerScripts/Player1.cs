@@ -236,7 +236,13 @@ public class Player1 : MonoBehaviour
         RaycastHit2D soloEsqDuplo = Raycast(new Vector2(posicao[2].x, posicao[2].y), Vector2.down, distancia, groundLayer);
         RaycastHit2D soloDirDuplo = Raycast(new Vector2(posicao[3].x, posicao[3].y), Vector2.down, distancia, groundLayer);
 
-        return ((soloDir || soloDirDuplo || soloEsq || soloEsqDuplo));
+        // Verificação de uma certa altura de queda pra matar o player menos rápido, fica mais suave e mais facil de entender que voce morreu por cair em um buraco.
+        RaycastHit2D tetoEsq = Raycast(new Vector2(posicao[0].x, posicao[0].y), new Vector2(-1,1), (distancia/3), groundLayer);
+        RaycastHit2D tetoDir = Raycast(new Vector2(posicao[1].x, posicao[1].y), new Vector2(1,1), (distancia/3), groundLayer);
+        RaycastHit2D esq = Raycast(new Vector2(posicao[0].x, posicao[0].y), Vector2.left, (distancia/3), groundLayer);
+        RaycastHit2D dir = Raycast(new Vector2(posicao[1].x, posicao[1].y), Vector2.right, (distancia/3), groundLayer);
+
+        return ((soloDir || soloDirDuplo || soloEsq || soloEsqDuplo) || (tetoDir || tetoEsq || esq || dir));
     }
 
     // se detectar objeto com a mascara informada e com a distantia informada retorna raio verde, caso contrario retorna raio vermelho.

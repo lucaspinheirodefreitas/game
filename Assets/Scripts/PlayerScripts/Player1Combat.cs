@@ -6,19 +6,24 @@ public class Player1Combat : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform attackPoint;
+
+    public GameObject playerGameObject;
     public float attackRange=0.5f;
     public int attackDamage = 20;
     public Animator animator;
     public LayerMask enemyLayers;
+
+    public Player1 player1Script;
     void Start()
     {
+        player1Script = playerGameObject.GetComponent<Player1>();
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Z) && (player1Script.isGrounded()))
         {
             
             playerAttackAnim();
