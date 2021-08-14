@@ -1097,12 +1097,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 326878106}
+  playerGameObject: {fileID: 1426798489}
   attackRange: 0.5
   attackDamage: 200
   animator: {fileID: 0}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
+  player1Script: {fileID: 0}
 --- !u!114 &1426798494
 MonoBehaviour:
   m_ObjectHideFlags: 0
