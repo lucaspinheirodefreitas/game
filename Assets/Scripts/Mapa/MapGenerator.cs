@@ -49,12 +49,12 @@ public class MapGenerator : MonoBehaviour
         int r = Random.Range(1, 100);
         if (r == 1 || r == 2 || r == 3 || r == 4 || r == 5)
         {
-            inimigo1 = Instantiate(inimigo1, new Vector2(width, height + 2), Quaternion.identity);
+            inimigo1 = Instantiate(inimigo1, new Vector2(width, height + 1), Quaternion.identity);
         }
 
         if (r == 6)
         {
-            //inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 2), Quaternion.identity);
+            inimigoKnight = Instantiate(inimigoKnight, new Vector2(width, height + 1), Quaternion.identity);
         }
 
     }
