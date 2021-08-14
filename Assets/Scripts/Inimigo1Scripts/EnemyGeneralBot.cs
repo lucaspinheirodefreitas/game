@@ -87,7 +87,6 @@ public class EnemyGeneralBot : MonoBehaviour
                 }
             } else {
                 if (start) {
-                    //tempoProcessamento=0.2f;
                     direcao = Random.Range(0, 2);
                     direcao = direcao > 0 ? 1 : -1;
                     start = false;
@@ -111,7 +110,6 @@ public class EnemyGeneralBot : MonoBehaviour
         }
         tempoProcessamento = Mathf.Clamp(tempoProcessamento - Time.fixedDeltaTime, 0, Mathf.Infinity);
     }
-
     bool DetectAttackRange()
     {
         Collider2D[] hitEnemies =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, (player));
