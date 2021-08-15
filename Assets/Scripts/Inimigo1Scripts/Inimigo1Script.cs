@@ -17,6 +17,9 @@ public class Inimigo1Script : MonoBehaviour
     public LayerMask enemyLayers;
     public float attackRange=0.5f;
     public int attackDamage = 20;
+
+    public float attackFrequency = 0.9f;
+    float tempoAttack;
     public bool tomandoDano;
     public bool attack;
     [SerializeField]
@@ -29,27 +32,52 @@ public class Inimigo1Script : MonoBehaviour
         }
     }
 
+    // audios
+    public AudioSource enemyAudioSource;
+    public AudioClip runSound;
+    public AudioClip jumpSound;
+    public AudioClip hurtSound;
+    public AudioClip dieSound;
+    public AudioClip attackSound;
+
     void Start()
     {
-        currentHealth = maxHealth;
+        enemyAudioSource = GetComponent<AudioSource>();
+        currentHealth = maxHealth * MapGenerator.level;
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         Pulou = false;
         rigidbody2D = GetComponent<Rigidbody2D>();
         attack = false;
         tomandoDano = false;
+        tempoAttack = attackFrequency;
+        Debug.Log("TempoAttack no start do "+ this.name + " = " + tempoAttack);
+    }
+
+    void FixedUpdate()
+    {
+        //Debug.Log("TempoAttack no update do "+ this.name + " = " + tempoAttack);
+        tempoAttack = Mathf.Clamp((tempoAttack - Time.fixedDeltaTime), 0, attackFrequency);
     }
 
     public void TakeDamage(int damage) {
-        tomandoDano = true;
-        currentHealth -= damage;
 
-        Debug.Log("Vida atual = " + currentHealth);
+        if(attack == false)
+        {
 
-        animator.SetTrigger("Inimigo1Damage");
+            enemyAudioSource.clip = hurtSound;
+            enemyAudioSource.Play();
+            tomandoDano = true;
+            currentHealth -= damage;
 
-        if(currentHealth <= 0)
-            Die();
+            Debug.Log("Vida atual = " + currentHealth);
+
+            //if(attack == false)
+            animator.SetTrigger("Inimigo1Damage");
+
+            if(currentHealth <= 0)
+                Die();
+        }
 
     }
 
@@ -58,15 +86,28 @@ public class Inimigo1Script : MonoBehaviour
     }
 
     void Die() {
+
+        enemyAudioSource.clip = dieSound;
+        enemyAudioSource.Play();
         Debug.Log("Enemy "+ this.name + " died!");
         animator.SetBool("Dead", true);
         //Destroy(this.boxCollider2D);
-        this.rigidbody2D.simulated = false;
+        //this.rigidbody2D.simulated = false;
 
+    }
+    void dieEnd(){
+
+        //Destroy(animator);
+        this.rigidbody2D.simulated = false;
+        //Destroy(this.gameObject);
+        //Destroy(this);
+        
     }
 
     public void Jump() {
         if (noChao && Pulou) {
+            enemyAudioSource.clip = jumpSound;
+            enemyAudioSource.Play();
             rigidbody2D.velocity = Vector2.up * Speed;
             animator.SetFloat("Jump", Speed);
         }
@@ -129,7 +170,11 @@ public class Inimigo1Script : MonoBehaviour
         Vector3 horizontal = new Vector3(direcao, 0.0f, 0.0f);
         transform.position = transform.position + (((horizontal * Time.deltaTime * Speed)));
         if (direcao > 0 || direcao < 0)  // direita
+        {
             animator.SetFloat("Speed",  Speed);
+            enemyAudioSource.clip = runSound;
+            enemyAudioSource.Play();
+        }
         else
            animator.SetFloat("Speed", 0.0f);
         
@@ -138,13 +183,25 @@ public class Inimigo1Script : MonoBehaviour
     }
     
     public void enemyAttackAnim() {
-        attack = true;
-        animator.SetTrigger("AttackTrigger");                    
+
+        Debug.Log("TempoAttack na hora da chamada do attack = " + tempoAttack);
+        if(tempoAttack == 0)
+        {
+            enemyAudioSource.clip = attackSound;
+            enemyAudioSource.Play();
+            attack = true;
+            animator.SetTrigger("AttackTrigger");
+            //tempoAttack = attackFrequency;
+
+        }
+
+                            
     }
 
     public void enemyAttackEnd()
     {
         attack = false;
+        tempoAttack = attackFrequency;
     }
 
     void enemyAttackCollDetection()

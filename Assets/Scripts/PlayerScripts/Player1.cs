@@ -10,6 +10,14 @@ public class Player1 : MonoBehaviour
     public bool olhandoDireita;
     public Vector3[] posicao;
 
+    // Audios clips
+
+    public AudioSource playerAudioSource;
+    public AudioClip runSound;
+    public AudioClip jumpSound;
+    public AudioClip hurtSound;
+    public AudioClip dieSound;
+
     public Animator animator;
     public GameManager gameManager;
     private float horizontalMove;
@@ -33,6 +41,7 @@ public class Player1 : MonoBehaviour
 
     void Start()
     {
+        playerAudioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -86,15 +95,29 @@ public class Player1 : MonoBehaviour
 
         Vector3 vertical = new Vector3(0.0f, verticalMove, 0.0f);
 
+        if(horizontalMove != 0)
+        {
+            if(!playerAudioSource.isPlaying)
+            {
+                Debug.Log("Tocando som de corrida do player1");
+                playerAudioSource.clip = runSound;
+                playerAudioSource.Play();
+            }
+        }
+        else
+        {
+            //playerAudioSource.Stop();
+        }
+
         if (horizontalMove > 0.5f)  // direita
         {
-
+            
             animator.SetFloat("Speed",  Speed);
 
         }
         else if (horizontalMove < -0.5f)   // esquerda
         {
-
+            
             animator.SetFloat("Speed", Speed);
 
         }
@@ -113,6 +136,8 @@ public class Player1 : MonoBehaviour
 
         if (noChao && Pulou)
         {
+            playerAudioSource.clip = jumpSound;
+            playerAudioSource.Play();
             rigidbody2D.velocity = Vector2.up * (Speed*1.2f);
             animator.SetFloat("Jump", Speed);
             
@@ -201,6 +226,9 @@ public class Player1 : MonoBehaviour
     {
         currentHealth -= damage;
 
+        playerAudioSource.clip = hurtSound;
+        playerAudioSource.Play();
+
         // animacao de machucar
         Debug.Log("Vida atual = " + currentHealth);
 
@@ -219,6 +247,8 @@ public class Player1 : MonoBehaviour
     void Die()
     {
         dead = true;
+        playerAudioSource.clip = dieSound;
+        playerAudioSource.Play();
         Debug.Log("Enemy "+ this.name + " died!");
 
         
@@ -236,7 +266,13 @@ public class Player1 : MonoBehaviour
         RaycastHit2D soloEsqDuplo = Raycast(new Vector2(posicao[2].x, posicao[2].y), Vector2.down, distancia, groundLayer);
         RaycastHit2D soloDirDuplo = Raycast(new Vector2(posicao[3].x, posicao[3].y), Vector2.down, distancia, groundLayer);
 
-        return ((soloDir || soloDirDuplo || soloEsq || soloEsqDuplo));
+        // Verificação de uma certa altura de queda pra matar o player menos rápido, fica mais suave e mais facil de entender que voce morreu por cair em um buraco.
+        RaycastHit2D tetoEsq = Raycast(new Vector2(posicao[0].x, posicao[0].y), new Vector2(-1,1), (distancia/3), groundLayer);
+        RaycastHit2D tetoDir = Raycast(new Vector2(posicao[1].x, posicao[1].y), new Vector2(1,1), (distancia/3), groundLayer);
+        RaycastHit2D esq = Raycast(new Vector2(posicao[0].x, posicao[0].y), Vector2.left, (distancia/3), groundLayer);
+        RaycastHit2D dir = Raycast(new Vector2(posicao[1].x, posicao[1].y), Vector2.right, (distancia/3), groundLayer);
+
+        return ((soloDir || soloDirDuplo || soloEsq || soloEsqDuplo) || (tetoDir || tetoEsq || esq || dir));
     }
 
     // se detectar objeto com a mascara informada e com a distantia informada retorna raio verde, caso contrario retorna raio vermelho.
